@@ -1,4 +1,9 @@
 body {
     font-family: Calibri;
-    background-color: rgb(160, 180, 195);
+    background-color: rgb(255, 255, 255);
+}
+
+.login-card {
+    background-color: #dbe3ea;
+    color: #343a40;
 }
