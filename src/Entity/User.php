@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Rights;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -37,6 +38,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 50)]
     private ?string $lastName = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Rights $Rights = null;
 
     public function getId(): ?int
     {
@@ -133,6 +138,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(string $lastName): static
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getRights(): ?Rights
+    {
+        return $this->Rights;
+    }
+
+    public function setRights(?Rights $Rights): static
+    {
+        $this->Rights = $Rights;
 
         return $this;
     }

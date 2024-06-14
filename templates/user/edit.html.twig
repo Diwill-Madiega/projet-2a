@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Edit User</h1>
+        
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+        
+
+        
+        <div class="form-group">
+            {{ form_label(form.firstName, 'First Name', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.firstName) }}
+                {{ form_errors(form.firstName) }}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.lastName, 'Last Name', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.lastName) }}
+                {{ form_errors(form.lastName) }}
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            {{ form_label(form.email, 'Email', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.password, 'Password', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.password) }}
+                {{ form_errors(form.password) }}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.Rights, 'Rights', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.Rights) }}
+                {{ form_errors(form.Rights) }}
+            </div>
+        </div>
+
+       <br />
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>{{ button_label|default(' Save') }}</button>
+                <a href="{{ path('app_user_index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to list</a>
+            </div>
+        </div>
+
+        {{ include('user/_delete_form.html.twig') }}
+        
+        {{ form_end(form) }}
+
+
+    </div>
+{% endblock %}

@@ -9,6 +9,7 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -24,7 +25,6 @@ security:
             logout:
                 path: app_logout # The path to your logout route
                 target: app_login # The route to redirect to after logout
-
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -34,7 +34,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/user/, roles: [ROLE_ADMIN] }
         - { path: ^/home, roles: [ROLE_USER, ROLE_ADMIN] }
 when@test:
     security:

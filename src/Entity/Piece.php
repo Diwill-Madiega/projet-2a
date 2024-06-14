@@ -1,5 +1,7 @@
 <?php
 
+// src/Entity/Piece.php
+
 namespace App\Entity;
 
 use App\Repository\PieceRepository;
@@ -19,14 +21,23 @@ class Piece
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?float $price = null;
+    #[ORM\Column(nullable: true)]
+    private ?float $buy_price = null; // Updated field
 
     #[ORM\Column(length: 255)]
     private ?string $gamme_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $gamme_desc = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $unit = null;
+
+    #[ORM\Column]
+    private ?int $stock = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $sell_price = null;
 
     public function getId(): ?int
     {
@@ -57,14 +68,14 @@ class Piece
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getBuyPrice(): ?float
     {
-        return $this->price;
+        return $this->buy_price;
     }
 
-    public function setPrice(float $price): static
+    public function setBuyPrice(?float $buy_price): static
     {
-        $this->price = $price;
+        $this->buy_price = $buy_price;
 
         return $this;
     }
@@ -89,6 +100,42 @@ class Piece
     public function setGammeDesc(?string $gamme_desc): static
     {
         $this->gamme_desc = $gamme_desc;
+
+        return $this;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(string $unit): static
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): static
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function getSellPrice(): ?float
+    {
+        return $this->sell_price;
+    }
+
+    public function setSellPrice(?float $sell_price): static
+    {
+        $this->sell_price = $sell_price;
 
         return $this;
     }

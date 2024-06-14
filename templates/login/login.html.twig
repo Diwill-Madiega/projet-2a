@@ -3,30 +3,34 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="container d-flex justify-content-center align-items-center min-vh-100 ">
-        <div class="card p-4 shadow-sm login-card" style="width: 100%; max-width: 400px; ">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 shadow-sm login-card anim" style="width: 100%; max-width: 400px;">
             <form method="post">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
 
+                <h1 class="h3 mb-3 fw-bold text-center">Connexion</h1>
+
+
                 {% if app.user %}
-                    <div class="mb-3">
-                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    <div class="mb-3  text-center">
+                        Vous êtes connecté en tant que {{ app.user.userIdentifier }} </a>
+                    </div>
+                    <div class="mb-3  text-center">
+                         <a href="{{ path('app_logout') }}"> Déconnexion</a>
                     </div>
                 {% endif %}
-
-                <h1 class="h3 mb-3 fw-bold text-center">Log in</h1>
                 
                 <div class="form-group">
                     <label for="username">Email</label>
-                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" placeholder="E-mail adress" required autofocus>
+                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" placeholder="Adressse E-mail" required autofocus>
                 </div>
                 
                 <br />
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" placeholder="password" required>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" placeholder="Mot de passe" required>
                 </div>
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -41,7 +45,7 @@
                     </div>
                 #}
                 <br />
-                <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary" type="submit">Connexion</button>
             </form>
         </div>
     </div>

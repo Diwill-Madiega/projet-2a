@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Piece{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Piece Details</h1>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Id</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.id }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Ref</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.ref }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Name</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.name }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Buy Price</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.buyPrice }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Gamme Name</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.gammeName }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Gamme Description</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.gammeDesc }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Unit</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.unit }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Stock</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.stock }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <strong>Sell Price</strong>
+                    </div>
+                    <div class="col-md-9">
+                        {{ piece.sellPrice }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <a href="{{ path('app_piece_index') }}"  class="btn btn-secondary btn-sm">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+            <a href="{{ path('app_piece_edit', {'id': piece.id}) }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-edit"></i> Modifier
+            </a>
+            {{ include('piece/_delete_form.html.twig', {'class': 'd-inline'}) }}
+        </div>
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Rights;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -18,6 +19,15 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $droit = new Rights();
+        $droit->setRoleName('administrateur');
+        $manager->persist($droit);
+
+        $droit_ouv = new Rights();
+        $droit_ouv->setRoleName('ouvrier');
+        $manager->persist($droit_ouv);
+
+
         $usersData = [
             [
                 'email' => 'user1@example.com',
@@ -25,6 +35,7 @@ class UserFixtures extends Fixture
                 'password' => 'password123',
                 'first_name' => 'John',
                 'last_name' => 'Doe',
+                'right' => $droit_ouv,
             ],
             [
                 'email' => 'admin@example.com',
@@ -32,9 +43,11 @@ class UserFixtures extends Fixture
                 'password' => 'admin123',
                 'first_name' => 'Admin',
                 'last_name' => 'User',
+                'right' => $droit,
             ],
-            // Add more users as needed
         ];
+
+
 
         foreach ($usersData as $userData) {
             $user = new User();
@@ -42,8 +55,8 @@ class UserFixtures extends Fixture
             $user->setRoles($userData['roles']);
             $user->setFirstName($userData['first_name']);
             $user->setLastName($userData['last_name']);
+            $user->setRights($userData['right']);
 
-            // Encode the password (assuming the User entity implements UserInterface)
             $encodedPassword = $this->passwordHasher->hashPassword($user, $userData['password']);
             $user->setPassword($encodedPassword);
 
