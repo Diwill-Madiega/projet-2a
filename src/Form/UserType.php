@@ -28,7 +28,15 @@ class UserType extends AbstractType
             ])
 
             ->add('password', null, [
-                'attr' => ['class' => 'form-control']
+                'mapped' => false,
+                'required' => false,
+
+                'attr' => [
+                    'required' => false,
+                    'class' => 'form-control',
+                    'autocomplete' => 'new-password',
+                    'placeholder' => 'Laisser vide pour garder le mot de passe actuel' 
+                ],
             ])
 
             ->add('Rights', EntityType::class, [
@@ -43,6 +51,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'csrf_protection' => true,
         ]);
     }
 }

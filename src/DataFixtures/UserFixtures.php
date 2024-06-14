@@ -20,11 +20,11 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $droit = new Rights();
-        $droit->setRoleName('administrateur');
+        $droit->setRoleName('Administrateur');
         $manager->persist($droit);
 
         $droit_ouv = new Rights();
-        $droit_ouv->setRoleName('ouvrier');
+        $droit_ouv->setRoleName('Ouvrier');
         $manager->persist($droit_ouv);
 
 

@@ -15,10 +15,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class PieceController extends AbstractController
 {
     #[Route('/', name: 'app_piece_index', methods: ['GET'])]
-    public function index(PieceRepository $pieceRepository): Response
+    public function index(PieceRepository $pieceRepository, Request $request): Response
     {
+        $search = $request->query->get('search');
+        $pieces = $pieceRepository->findBySearch($search);
+
         return $this->render('piece/index.html.twig', [
-            'pieces' => $pieceRepository->findAll(),
+            'pieces' => $pieces,
         ]);
     }
 
