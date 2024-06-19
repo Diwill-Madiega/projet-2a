@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Rights;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -42,6 +44,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Rights $Rights = null;
+
+    /**
+     * @var Collection<int, Gamme>
+     */
+    #[ORM\OneToMany(targetEntity: Gamme::class, mappedBy: 'owner')]
+    private Collection $gammes;
+
+    public function __construct()
+    {
+        $this->gammes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +163,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRights(?Rights $Rights): static
     {
         $this->Rights = $Rights;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gamme>
+     */
+    public function getGammes(): Collection
+    {
+        return $this->gammes;
+    }
+
+    public function addGamme(Gamme $gamme): static
+    {
+        if (!$this->gammes->contains($gamme)) {
+            $this->gammes->add($gamme);
+            $gamme->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGamme(Gamme $gamme): static
+    {
+        if ($this->gammes->removeElement($gamme)) {
+            // set the owning side to null (unless already changed)
+            if ($gamme->getOwner() === $this) {
+                $gamme->setOwner(null);
+            }
+        }
 
         return $this;
     }

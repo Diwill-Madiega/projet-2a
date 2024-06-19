@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Gamme{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-4 mb-4"><strong>Créer une gamme</strong></h1>
+
+    <div class="mt-4">
+        {{ include('gamme/_form.html.twig') }}
+        <a href="{{ path('app_gamme_index') }}" class="btn btn-secondary mt-2"><i class="fas fa-arrow-left"></i> Retour</a>
+    </div>
+<div>
+{% endblock %}

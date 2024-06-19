@@ -39,6 +39,9 @@ class Piece
     #[ORM\Column(nullable: true)]
     private ?float $sell_price = null;
 
+    #[ORM\OneToOne(mappedBy: 'piece', cascade: ['persist', 'remove'])]
+    private ?Gamme $gamme = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +139,28 @@ class Piece
     public function setSellPrice(?float $sell_price): static
     {
         $this->sell_price = $sell_price;
+
+        return $this;
+    }
+
+    public function getGamme(): ?Gamme
+    {
+        return $this->gamme;
+    }
+
+    public function setGamme(?Gamme $gamme): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($gamme === null && $this->gamme !== null) {
+            $this->gamme->setPiece(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($gamme !== null && $gamme->getPiece() !== $this) {
+            $gamme->setPiece($this);
+        }
+
+        $this->gamme = $gamme;
 
         return $this;
     }

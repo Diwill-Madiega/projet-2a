@@ -29,13 +29,12 @@ class UserType extends AbstractType
 
             ->add('password', null, [
                 'mapped' => false,
-                'required' => false,
+                'required' => true,
 
                 'attr' => [
                     'required' => false,
                     'class' => 'form-control',
                     'autocomplete' => 'new-password',
-                    'placeholder' => 'Laisser vide pour garder le mot de passe actuel' 
                 ],
             ])
 

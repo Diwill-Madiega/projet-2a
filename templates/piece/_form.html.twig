@@ -1,4 +1,37 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    <div class="form-group">
+        {{ form_label(form.ref, "Réference", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.ref, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.name, "Nom", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.buy_price, "Prix d'achat", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.buy_price, {'attr': {'class': 'form-control'}}) }}
+    </div>
+        <div class="form-group">
+        {{ form_label(form.sell_price, "Prix de vente", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.sell_price, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.gamme_name, "Nom de la gamme", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.gamme_name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.gamme_desc, "Description de la gamme", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.gamme_desc, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.unit, "Unité", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.unit, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.stock, "Stock", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <button class="btn btn-primary mt-3"> <i class="fas fa-save"></i>{{ button_label|default(' Enregistrer') }}</button>
 {{ form_end(form) }}
+

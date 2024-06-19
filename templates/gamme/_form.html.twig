@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.name, "Nom", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+        <div class="form-group">
+        {{ form_label(form.description, "Description", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+    </div>
+        <div class="form-group">
+        {{ form_label(form.owner, "Responsable", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.owner, {'attr': {'class': 'form-control'}}) }}
+    </div>
+        <div class="form-group">
+        {{ form_label(form.piece, "Pièce", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.piece, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <button class="btn btn-primary mt-3"> <i class="fas fa-save"></i>{{ button_label|default(' Enregistrer') }}</button>
+{{ form_end(form) }}

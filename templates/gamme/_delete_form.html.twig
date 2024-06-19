@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_gamme_delete', {'id': gamme.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer cette gamme?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ gamme.id) }}">
+    <button class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+</form>

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container mt-5">
-        <h1 class="mb-4">Piece Details</h1>
+        <h1 class="mb-4">Détails de la Pièce</h1>
         
         <div class="card">
             <div class="card-body">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <strong>Ref</strong>
+                        <strong>Réference</strong>
                     </div>
                     <div class="col-md-9">
                         {{ piece.ref }}
@@ -26,23 +26,25 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <strong>Name</strong>
+                        <strong>Nom</strong>
                     </div>
                     <div class="col-md-9">
                         {{ piece.name }}
                     </div>
                 </div>
+                {% if piece.buyPrice is not null %}
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <strong>Prix d'achat</strong>
+                        </div>
+                        <div class="col-md-9">
+                            {{ piece.buyPrice }}
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <strong>Buy Price</strong>
-                    </div>
-                    <div class="col-md-9">
-                        {{ piece.buyPrice }}
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-3">
-                        <strong>Gamme Name</strong>
+                        <strong>Nom de la Gamme</strong>
                     </div>
                     <div class="col-md-9">
                         {{ piece.gammeName }}
@@ -50,7 +52,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <strong>Gamme Description</strong>
+                        <strong>Description Gamme</strong>
                     </div>
                     <div class="col-md-9">
                         {{ piece.gammeDesc }}
@@ -58,7 +60,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <strong>Unit</strong>
+                        <strong>Unité</strong>
                     </div>
                     <div class="col-md-9">
                         {{ piece.unit }}
@@ -72,25 +74,28 @@
                         {{ piece.stock }}
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-3">
-                        <strong>Sell Price</strong>
+                {% if piece.sellPrice is not null %}
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <strong>Prix de vente</strong>
+                        </div>
+                        <div class="col-md-9">
+                            {{ piece.sellPrice }}
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        {{ piece.sellPrice }}
-                    </div>
-                </div>
+                {% endif %}
             </div>
         </div>
         
         <div class="mt-4">
-            <a href="{{ path('app_piece_index') }}"  class="btn btn-secondary btn-sm">
+            <a href="{{ path('app_piece_index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Retour
             </a>
-            <a href="{{ path('app_piece_edit', {'id': piece.id}) }}" class="btn btn-primary btn-sm">
+            <a href="{{ path('app_piece_edit', {'id': piece.id}) }}" class="btn btn-primary">
                 <i class="fas fa-edit"></i> Modifier
             </a>
             {{ include('piece/_delete_form.html.twig', {'class': 'd-inline'}) }}
         </div>
     </div>
 {% endblock %}
+

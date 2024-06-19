@@ -8,6 +8,37 @@ body {
     color: #343a40;
 }
 
+.navbar-admin {
+    background-color: rgb(100, 100, 100);
+    color :white 
+}
+
+.navbar-user {
+    background-color: rgb(226, 70, 70);
+    color :white 
+}
+
+.white-text{
+    color :white   
+}
+
+.white-text:hover {
+    color :lightgray
+}
+
+.white-text::selection {
+    color :white 
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(225, 225, 225);
+    text-align:center;
+  }
+
 .anim {
     opacity: 0;
     animation: fadeInUp 0.6s ease-in-out forwards;

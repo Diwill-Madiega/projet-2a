@@ -1,66 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
-
 {% block body %}
-    <div class="container mt-4 ">
+    <div class="container mt-5">
         <h1 class="mb-4"><strong>Modifier l'utilisateur</strong></h1>
-        
-        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-        
 
-        
-        <div class="form-group">
-            {{ form_label(form.firstName, 'Prénom', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
-                {{ form_widget(form.firstName) }}
-                {{ form_errors(form.firstName) }}
-            </div>
-        </div>
-        
-        <div class="form-group">
-            {{ form_label(form.lastName, 'Nom', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
-                {{ form_widget(form.lastName) }}
-                {{ form_errors(form.lastName) }}
-            </div>
-        </div>
-        
-
-        <div class="form-group">
-            {{ form_label(form.email, 'Email', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
-                {{ form_widget(form.email) }}
-                {{ form_errors(form.email) }}
+        <div class="card">
+            <div class="card-body">
+                {{ include('user/_form.html.twig', {'button_label': ' Enregistrer'}) }}
             </div>
         </div>
 
-        <div class="form-group">
-            {{ form_label(form.password, 'Mot de passe', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
-                {{ form_widget(form.password) }}
-                {{ form_errors(form.password) }}
-            </div>
+        <div class="mt-4">
+            <a href="{{ path('app_user_index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Retour</a>
+            {{ include('user/_delete_form.html.twig') }}
         </div>
-        
-        <div class="form-group">
-            {{ form_label(form.Rights, 'Rôle', {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
-                {{ form_widget(form.Rights) }}
-                {{ form_errors(form.Rights) }}
-            </div>
-        </div>
-
-       <br />
-        <div class="form-group text-center d-flex justify-content-between">
-            <div class="col-sm-offset-2 col-sm-10">
-                <a href="{{ path('app_user_index') }}" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i> Retour</a>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-save"></i>{{ button_label|default(' Enregistrer') }}</button>
-                {{ include('user/_delete_form.html.twig') }}
-            </div>
-        </div>
-   
-        {{ form_end(form) }}
-
     </div>
 {% endblock %}

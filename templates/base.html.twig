@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Accueil{% endblock %}</title>
         <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon" />
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -11,7 +11,6 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
@@ -19,47 +18,93 @@
     </head>
     <body>
     {% if app.request.get('_route') != 'app_login' %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <img src="{{ asset('logo.png') }}" alt="Logo" class="navbar-logo" width="3%" height="3%">
-        <a class="navbar-brand fw-bold" href="{{ path('homepage') }}">  PingSite</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        {% set navbar_class = 'navbar-user' %}
+        {% if is_granted('ROLE_ADMIN') %}
+            {% set navbar_class = 'navbar-admin' %}
+        {% endif %}
 
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_piece_index') }}"><i class="fas fa-cogs"></i> Pièces </a>
-                    
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> <i class="fas fa-list"></i> Gammes </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> <i class="fas fa-hdd"></i> Machines </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-desktop"></i> Postes </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-wrench"></i> Opérations </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-pager"></i> Réalisations </a>
-                </li>
-                <li class="nav-item">
-                     <a class="nav-link" href="{{ path('app_user_index') }}">  <i class="fas fa-user"></i> Utilisateurs </a>
-                </li>
-                {% if app.user %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}"> <i class="fas fa-sign-out-alt"></i> Déconnexion </a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+        <nav class="navbar navbar-expand-lg {{ navbar_class }} shadow">
+            <img src="{{ asset('logo.png') }}" alt="Logo" class="navbar-logo" width="3%" height="3%">
+            <a class="navbar-brand fw-bold white-text" href="{{ path('homepage') }}">PingSite</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle white-text" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-cogs white-text"></i> Atelier
+                            </a>
+                            <div class="dropdown-menu white-text" aria-labelledby="adminDropdown">
+                                <a class="dropdown-item" href="{{ path('app_piece_index') }}">Pièces</a>
+                                <a class="dropdown-item" href="{{ path('app_gamme_index') }}">Gammes</a>
+                                <a class="dropdown-item" href="{{ path('app_machine_index') }}">Machines</a>
+                                <a class="dropdown-item" href="#">Postes</a>
+                                <a class="dropdown-item" href="#">Opérations</a>
+                                <a class="dropdown-item" href="#">Réalisations</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle white-text" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-comment-dollar white-text"></i> Commercial
+                            </a>
+                            <div class="dropdown-menu white-text" aria-labelledby="adminDropdown">
+                                <a class="dropdown-item" href="{{ path('app_piece_index') }}">Devis</a>
+                                <a class="dropdown-item" href="#">Commandes vente</a>
+                                <a class="dropdown-item" href="{{ path('app_machine_index') }}">Commandes achat</a>
+                                <a class="dropdown-item" href="#">Clients</a>
+                                <a class="dropdown-item" href="#">Fournisseurs</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle white-text" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-shield white-text"></i> Admin
+                            </a>
+                            <div class="dropdown-menu white-text" aria-labelledby="adminDropdown">
+                                <a class="dropdown-item" href="{{ path('app_user_index') }}">Utilisateurs</a>
+                                <a class="dropdown-item" href="#">Droits</a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="{{ path('app_piece_index') }}"><i class="fas fa-cogs"></i> Pièces</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="{{ path('app_gamme_index') }}"><i class="fas fa-list"></i> Gammes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="{{ path('app_machine_index') }}"><i class="fas fa-hdd"></i> Machines</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="#"><i class="fas fa-desktop"></i> Postes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="#"><i class="fas fa-wrench"></i> Opérations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="#"><i class="fas fa-pager"></i> Réalisations</a>
+                        </li>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
     {% endif %}
         {% block body %}{% endblock %}
+        
+        <br /> <br />
+    {% if app.user %}
+        <div class="footer">
+           <p> © PingSite 2024. Tous droits réservés.</p>
+        </div>
+    {% endif %}
+        
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
