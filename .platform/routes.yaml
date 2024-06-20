@@ -1,7 +1,2 @@
-# "https://{all}/": { type: upstream, upstream: "app:http" }
-# "http://{all}/": { type: redirect, to: "https://{all}/" }
-
-# Each route describes how an incoming URL is going to be processed by Platform.sh.
-"https://www.{default}/":
-type: upstream
-upstream: "app:http"
+"https://{all}/": { type: upstream, upstream: "app:http" }
+"http://{all}/": { type: redirect, to: "https://{all}/" }
