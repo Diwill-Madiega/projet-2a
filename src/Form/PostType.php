@@ -2,32 +2,33 @@
 
 namespace App\Form;
 
-use App\Entity\Piece;
+use App\Entity\Machine;
+use App\Entity\Post;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Piece1Type extends AbstractType
+class PostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('ref')
             ->add('name')
-            ->add('buy_price')
-            ->add('gamme_name')
-            ->add('gamme_desc')
-            ->add('gamme')
-            ->add('unit')
-            ->add('stock')
-            ->add('sell_price')
+            ->add('description')
+            ->add('machine', EntityType::class, [
+                'class' => Machine::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'required' => false,
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Piece::class,
+            'data_class' => Post::class,
         ]);
     }
 }

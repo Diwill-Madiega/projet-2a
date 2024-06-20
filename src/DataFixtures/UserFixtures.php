@@ -19,9 +19,9 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $droit = new Rights();
-        $droit->setRoleName('Administrateur');
-        $manager->persist($droit);
+        $droit_ad = new Rights();
+        $droit_ad->setRoleName('Administrateur');
+        $manager->persist($droit_ad);
 
         $droit_ouv = new Rights();
         $droit_ouv->setRoleName('Ouvrier');
@@ -43,7 +43,7 @@ class UserFixtures extends Fixture
                 'password' => 'admin123',
                 'first_name' => 'Admin',
                 'last_name' => 'User',
-                'right' => $droit,
+                'right' => $droit_ad,
             ],
         ];
 

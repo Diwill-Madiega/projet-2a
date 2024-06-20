@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\MachineRepository;
+use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MachineRepository::class)]
-class Machine
+#[ORM\Entity(repositoryClass: PostRepository::class)]
+class Post
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,19 +22,14 @@ class Machine
     private ?string $description = null;
 
     /**
-     * @var Collection<int, Post>
+     * @var Collection<int, Machine>
      */
-    #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'machine')]
-    private Collection $posts;
+    #[ORM\ManyToMany(targetEntity: Machine::class, inversedBy: 'posts')]
+    private Collection $machine;
 
     public function __construct()
     {
-        $this->posts = new ArrayCollection();
-    }
-
-    public function __toString(): string
-    {
-        return $this->name; // or any other property that should represent the machine as a string
+        $this->machine = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,30 +62,26 @@ class Machine
     }
 
     /**
-     * @return Collection<int, Post>
+     * @return Collection<int, Machine>
      */
-    public function getPosts(): Collection
+    public function getMachine(): Collection
     {
-        return $this->posts;
+        return $this->machine;
     }
 
-    public function addPost(Post $post): static
+    public function addMachine(Machine $machine): static
     {
-        if (!$this->posts->contains($post)) {
-            $this->posts->add($post);
-            $post->addMachine($this);
+        if (!$this->machine->contains($machine)) {
+            $this->machine->add($machine);
         }
 
         return $this;
     }
 
-    public function removePost(Post $post): static
+    public function removeMachine(Machine $machine): static
     {
-        if ($this->posts->removeElement($post)) {
-            $post->removeMachine($this);
-        }
+        $this->machine->removeElement($machine);
 
         return $this;
     }
-
 }

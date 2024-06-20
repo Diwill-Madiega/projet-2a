@@ -3,7 +3,8 @@
 {% block title %}Gamme{% endblock %}
 
 {% block body %}
-    <h1>Gamme</h1>
+<div class="container mt-5">
+    <h1>Détails de la gamme</h1>
 
     <table class="table">
         <tbody>
@@ -30,9 +31,14 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_gamme_index') }}">back to list</a>
-
-    <a href="{{ path('app_gamme_edit', {'id': gamme.id}) }}">edit</a>
-
-    {{ include('gamme/_delete_form.html.twig') }}
+        <div class="mt-4">
+            <a href="{{ path('app_gamme_index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+            <a href="{{ path('app_gamme_edit', {'id': gamme.id}) }}" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Modifier
+            </a>
+            {{ include('gamme/_delete_form.html.twig', {'class': 'd-inline'}) }}
+        </div>
+</div>
 {% endblock %}
