@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réalisation{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Détails de la réalisation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ production.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ production.name }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ production.date ? production.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Durée</th>
+                <td>{{ production.duration }}</td>
+            </tr>
+            <tr>
+                <th>Poste</th>
+                <td>{{ production.post.name }}</td>
+            </tr>
+            <tr>
+                <th>Machine</th>
+                <td>{{ production.machine.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <div class="mt-4">
+            <a href="{{ path('app_production_index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+            <a href="{{ path('app_production_edit', {'id': production.id}) }}" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Modifier
+            </a>
+            {{ include('production/_delete_form.html.twig', {'class': 'd-inline'}) }}
+        </div>
+
+</div>
+{% endblock %}

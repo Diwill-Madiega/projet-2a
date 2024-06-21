@@ -30,7 +30,6 @@
                     <div class="card h-100 anim shadow-sm" style="animation-delay: {{ loop.index0 * 0.2 }}s;">
                         <div class="card-body">
                             <p class="card-text text-center"><strong><h3 class="text-center">{{ machine.name }}</strong></h3></p>
-                            <p class="card-text text-center"> {{ machine.description }}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between">
                             <a href="{{ path('app_machine_show', {'id':machine.id}) }}" class="btn btn-info">
@@ -45,7 +44,7 @@
                 </div>
             {% else %}
                 <div class="col-12">
-                    <div class="alert alert-warning text-center" role="alert">
+                    <div class="anim alert alert-warning text-center" role="alert">
                         Aucune machine trouvée.
                     </div>
                 </div>

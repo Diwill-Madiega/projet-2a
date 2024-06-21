@@ -27,9 +27,16 @@ class Post
     #[ORM\ManyToMany(targetEntity: Machine::class, inversedBy: 'posts')]
     private Collection $machine;
 
+    /**
+     * @var Collection<int, Production>
+     */
+    #[ORM\OneToMany(targetEntity: Production::class, mappedBy: 'post')]
+    private Collection $productions;
+
     public function __construct()
     {
         $this->machine = new ArrayCollection();
+        $this->productions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,6 +88,36 @@ class Post
     public function removeMachine(Machine $machine): static
     {
         $this->machine->removeElement($machine);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Production>
+     */
+    public function getProductions(): Collection
+    {
+        return $this->productions;
+    }
+
+    public function addProduction(Production $production): static
+    {
+        if (!$this->productions->contains($production)) {
+            $this->productions->add($production);
+            $production->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduction(Production $production): static
+    {
+        if ($this->productions->removeElement($production)) {
+            // set the owning side to null (unless already changed)
+            if ($production->getPost() === $this) {
+                $production->setPost(null);
+            }
+        }
 
         return $this;
     }

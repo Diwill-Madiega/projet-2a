@@ -27,9 +27,16 @@ class Machine
     #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'machine')]
     private Collection $posts;
 
+    /**
+     * @var Collection<int, Production>
+     */
+    #[ORM\OneToMany(targetEntity: Production::class, mappedBy: 'machine')]
+    private Collection $productions;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->productions = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -88,6 +95,36 @@ class Machine
     {
         if ($this->posts->removeElement($post)) {
             $post->removeMachine($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Production>
+     */
+    public function getProductions(): Collection
+    {
+        return $this->productions;
+    }
+
+    public function addProduction(Production $production): static
+    {
+        if (!$this->productions->contains($production)) {
+            $this->productions->add($production);
+            $production->setMachine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduction(Production $production): static
+    {
+        if ($this->productions->removeElement($production)) {
+            // set the owning side to null (unless already changed)
+            if ($production->getMachine() === $this) {
+                $production->setMachine(null);
+            }
         }
 
         return $this;

@@ -26,6 +26,11 @@ class Gamme
     #[ORM\OneToOne(inversedBy: 'gamme', cascade: ['persist', 'remove'])]
     private ?Piece $piece = null;
 
+    public function __toString(): string
+    {
+        return $this->name; // or any other property that should represent the machine as a string
+    }
+
     public function getId(): ?int
     {
         return $this->id;

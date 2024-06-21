@@ -16,6 +16,18 @@ class OperationRepository extends ServiceEntityRepository
         parent::__construct($registry, Operation::class);
     }
 
+    public function findBySearch(?string $search): array
+    {
+        $qb = $this->createQueryBuilder('o');
+
+        if ($search) {
+            $qb->andWhere('LOWER(o.name) LIKE LOWER(:search)')
+               ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Operation[] Returns an array of Operation objects
 //     */
