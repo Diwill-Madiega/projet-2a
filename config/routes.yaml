@@ -4,3 +4,7 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+
+app_login:
+    path: /
+    controller: App\Controller\LoginController::login

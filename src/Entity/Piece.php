@@ -24,7 +24,7 @@ class Piece
     #[ORM\Column(nullable: true)]
     private ?float $buy_price = null; // Updated field
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $gamme_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]

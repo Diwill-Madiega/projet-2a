@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GammeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GammeRepository::class)]
@@ -26,9 +28,15 @@ class Gamme
     #[ORM\OneToOne(inversedBy: 'gamme', cascade: ['persist', 'remove'])]
     private ?Piece $piece = null;
 
-    public function __toString(): string
+    /**
+     * @var Collection<int, Operation>
+     */
+    #[ORM\ManyToMany(targetEntity: Operation::class, inversedBy: 'gammes')]
+    private Collection $operation;
+
+    public function __construct()
     {
-        return $this->name; // or any other property that should represent the machine as a string
+        $this->operation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,6 +88,30 @@ class Gamme
     public function setPiece(?Piece $piece): static
     {
         $this->piece = $piece;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Operation>
+     */
+    public function getOperation(): Collection
+    {
+        return $this->operation;
+    }
+
+    public function addOperation(Operation $operation): static
+    {
+        if (!$this->operation->contains($operation)) {
+            $this->operation->add($operation);
+        }
+
+        return $this;
+    }
+
+    public function removeOperation(Operation $operation): static
+    {
+        $this->operation->removeElement($operation);
 
         return $this;
     }

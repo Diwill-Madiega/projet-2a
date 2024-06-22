@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1>Détails de la gamme</h1>
+    <h1><strong>Détails de la gamme</strong></h1>
 
     <table class="table">
         <tbody>
@@ -30,6 +30,11 @@
                 <td>{{ gamme.piece.name }}</td>
             </tr>
             {% endif %}
+            <tr>
+                <th>Liste des opérations</th>
+                <td>{{ gamme.operation ? gamme.operation|join(', ') : '' }}</td>
+            </tr>
+
         </tbody>
     </table>
 

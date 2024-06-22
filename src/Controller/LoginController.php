@@ -9,7 +9,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/l', name: 'app_login')]
+    #[Route(path: '/login', name: 'app_login_alt')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // get the login error if there is one

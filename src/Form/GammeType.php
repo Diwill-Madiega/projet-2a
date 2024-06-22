@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Operation;
 use App\Entity\Gamme;
 use App\Entity\Piece;
 use App\Entity\User;
@@ -26,6 +27,13 @@ class GammeType extends AbstractType
                 'class' => Piece::class,
                 'choice_label' => 'name',
                 'attr' => ['autocomplete' => 'off']
+            ])
+            ->add('operation', EntityType::class, [
+                'class' => Operation::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'required' => false,
+                'mapped' => false,
             ])
         ;
        
