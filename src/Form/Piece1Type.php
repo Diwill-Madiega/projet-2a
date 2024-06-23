@@ -23,7 +23,7 @@ class Piece1Type extends AbstractType
                 'class' => Gamme::class,
                 'choice_label' => 'name',
                 'required' => false,
-                'placeholder' => 'Sélectionner',
+                'placeholder' => 'Gamme',
             ])
             ->add('unit')
             ->add('stock')

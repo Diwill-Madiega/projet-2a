@@ -35,6 +35,11 @@ class Operation
         $this->gammes = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name; // or any other string representation of your operation
+    }
+
     public function getId(): ?int
     {
         return $this->id;

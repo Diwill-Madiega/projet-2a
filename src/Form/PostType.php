@@ -20,6 +20,7 @@ class PostType extends AbstractType
                 'class' => Machine::class,
                 'choice_label' => 'name',
                 'multiple' => true,
+                'placeholder' => 'Machine(s)',
                 'required' => false,
             ])
         ;

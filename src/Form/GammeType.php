@@ -26,6 +26,7 @@ class GammeType extends AbstractType
             ->add('piece', EntityType::class, [
                 'class' => Piece::class,
                 'choice_label' => 'name',
+                'placeholder' => 'Pièce',
                 'attr' => ['autocomplete' => 'off']
             ])
             ->add('operation', EntityType::class, [
@@ -33,7 +34,6 @@ class GammeType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'required' => false,
-                'mapped' => false,
             ])
         ;
        

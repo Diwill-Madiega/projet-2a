@@ -8,8 +8,10 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
+        <link rel="stylesheet" href="{{ asset('node_modules/toastr/build/toastr.min.css') }}" >
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link href="{{ asset('build/app.css') }}" rel="stylesheet">
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
@@ -96,6 +98,27 @@
             </div>
         </nav>
     {% endif %}
+<!-- Toast container -->
+<div class="toast-pos position-fixed top-0 start-50 p-3" style="z-index: 1050;">
+    <div class="toast-container">
+        {% for message in app.flashes('error') %}
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Erreur</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+    <!-- Include Bootstrap JS -->
+    <script src="{{ asset('build/app.js') }}"></script>
+
         {% block body %}{% endblock %}
         
         <br /> <br />
@@ -109,5 +132,18 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://kit.fontawesome.com/ebc72dbf59.js" crossorigin="anonymous"></script>
+        <script src="{{ asset('node_modules/toastr/build/toastr.min.js') }}"></script>
+
+         <!-- Initialize toasts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            var toastList = toastElList.map(function (toastEl) {
+                return new bootstrap.Toast(toastEl, { delay: 5000 });
+            });
+            toastList.forEach(toast => toast.show());
+        });
+    </script>
+
     </body>
 </html>
