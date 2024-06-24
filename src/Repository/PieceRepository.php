@@ -28,7 +28,6 @@ class PieceRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-
     //    /**
     //     * @return Piece[] Returns an array of Piece objects
     //     */

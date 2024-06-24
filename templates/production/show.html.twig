@@ -21,7 +21,7 @@
                 <td>{{ production.date ? production.date|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Durée</th>
+                <th>Durée (min)</th>
                 <td>{{ production.duration }}</td>
             </tr>
             <tr>
@@ -31,6 +31,10 @@
             <tr>
                 <th>Machine</th>
                 <td>{{ production.machine.name }}</td>
+            </tr>
+            <tr>
+                <th>Ouvrier</th>
+                <td>{{  production.creator ? production.creator.firstName }} {{ production.creator ? production.creator.lastName }}</td>
             </tr>
         </tbody>
     </table>

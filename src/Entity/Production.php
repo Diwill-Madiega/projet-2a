@@ -31,6 +31,9 @@ class Production
     #[ORM\JoinColumn(nullable: false)]
     private ?Machine $machine = null;
 
+    #[ORM\ManyToOne(inversedBy: 'productions')]
+    private ?User $creator = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class Production
     public function setMachine(?Machine $machine): static
     {
         $this->machine = $machine;
+
+        return $this;
+    }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): static
+    {
+        $this->creator = $creator;
 
         return $this;
     }

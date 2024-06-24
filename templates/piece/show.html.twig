@@ -21,6 +21,10 @@
                 <th>Nom</th>
                 <td>{{ piece.name }}</td>
             </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ piece.type }}</td>
+            </tr>
             {% if piece.buyPrice is not null %}
             <tr>
                 <th>Prix d'achat</th>
@@ -46,6 +50,10 @@
             <tr>
                 <th>Stock</th>
                 <td>{{ piece.stock }}</td>      
+            </tr>
+            <tr>
+                <th>Sous-pièces</th>
+                <td>{{ piece.subpieces ? piece.subpieces|join(', ') : '' }}</td>      
             </tr>
         </tbody>
     </table>

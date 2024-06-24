@@ -30,9 +30,19 @@ class Operation
     #[ORM\ManyToMany(targetEntity: Gamme::class, mappedBy: 'operations')]
     private Collection $gammes;
 
+    #[ORM\ManyToOne(inversedBy: 'operations')]
+    private ?Post $post = null;
+
+    /**
+     * @var Collection<int, Machine>
+     */
+    #[ORM\ManyToMany(targetEntity: Machine::class, inversedBy: 'operations')]
+    private Collection $machine;
+
     public function __construct()
     {
         $this->gammes = new ArrayCollection();
+        $this->machine = new ArrayCollection();
     }
 
     public function __toString()
@@ -104,6 +114,42 @@ class Operation
         if ($this->gammes->removeElement($gamme)) {
             $gamme->removeOperation($this);
         }
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): static
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Machine>
+     */
+    public function getMachine(): Collection
+    {
+        return $this->machine;
+    }
+
+    public function addMachine(Machine $machine): static
+    {
+        if (!$this->machine->contains($machine)) {
+            $this->machine->add($machine);
+        }
+
+        return $this;
+    }
+
+    public function removeMachine(Machine $machine): static
+    {
+        $this->machine->removeElement($machine);
 
         return $this;
     }

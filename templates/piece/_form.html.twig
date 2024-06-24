@@ -1,33 +1,84 @@
 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
     <div class="form-group">
         {{ form_label(form.ref, "Réference", {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.ref, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.ref, {'attr': {'class': 'form-control', 'id': 'form_ref'}}) }}
     </div>
     <div class="form-group">
         {{ form_label(form.name, "Nom", {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control', 'id': 'form_name'}}) }}
     </div>
+<div class="form-group">
+    {{ form_label(form.type, "Type", {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.type, {'attr': {'class': 'form-control', 'id': 'form_type'}}) }}
+</div>
     <div class="form-group">
         {{ form_label(form.buy_price, "Prix d'achat", {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.buy_price, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.buy_price, {'attr': {'class': 'form-control', 'id': 'form_buy_price'}}) }}
     </div>
-        <div class="form-group">
+    <div class="form-group">
         {{ form_label(form.sell_price, "Prix de vente", {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.sell_price, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.sell_price, {'attr': {'class': 'form-control', 'id': 'form_sell_price'}}) }}
     </div>
     <div class="form-group">
         {{ form_label(form.gamme, "Gamme", {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.gamme, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.gamme, {'attr': {'class': 'form-control', 'id': 'form_gamme'}}) }}
     </div>
     <div class="form-group">
         {{ form_label(form.unit, "Unité", {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.unit, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.unit, {'attr': {'class': 'form-control', 'id': 'form_unit'}}) }}
     </div>
     <div class="form-group">
         {{ form_label(form.stock, "Stock", {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.stock, {'attr': {'class': 'form-control', 'id': 'form_stock'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.subpieces, "Sous-pièces", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.subpieces, {'attr': {'class': 'form-control'}}) }}
     </div>
 
     <button class="btn btn-primary mt-3"> <i class="fas fa-save"></i>{{ button_label|default(' Enregistrer') }}</button>
 {{ form_end(form) }}
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const typeField = document.getElementById('piece1_type');
+    const buyPriceField = document.getElementById('piece1_buy_price');
+    const sellPriceField = document.getElementById('piece1_sell_price');
+
+    if (!typeField || !buyPriceField || !sellPriceField) {
+        console.error('One or more fields are not found in the DOM');
+        return;
+    }
+
+    function updateFieldStates() {
+        const selectedType = typeField.value;
+        console.log('Selected type:', selectedType);
+
+        switch (selectedType) {
+            case 'matière première':
+            case 'achetée':
+                buyPriceField.disabled = false;
+                sellPriceField.disabled = true;
+                break;
+            case 'intermédiaire':
+                buyPriceField.disabled = false;
+                sellPriceField.disabled = false;
+                break;
+            case 'livrable':
+                buyPriceField.disabled = true;
+                sellPriceField.disabled = false;
+                break;
+            default:
+                buyPriceField.disabled = true;
+                sellPriceField.disabled = true;
+        }
+
+        console.log('buyPriceField.disabled:', buyPriceField.disabled);
+        console.log('sellPriceField.disabled:', sellPriceField.disabled);
+    }
+
+    updateFieldStates();
+
+    typeField.addEventListener('change', updateFieldStates);
+});
+</script>

@@ -5,6 +5,8 @@
 namespace App\Entity;
 
 use App\Repository\PieceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PieceRepository::class)]
@@ -41,6 +43,27 @@ class Piece
 
     #[ORM\OneToOne(mappedBy: 'piece', cascade: ['persist', 'remove'])]
     private ?Gamme $gamme = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $type = null;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'subpieces')]
+    private Collection $subpiece;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'subpiece')]
+    private Collection $subpieces;
+
+    public function __construct()
+    {
+        $this->subpiece = new ArrayCollection();
+        $this->subpieces = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -163,5 +186,49 @@ class Piece
         $this->gamme = $gamme;
 
         return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getSubpiece(): Collection
+    {
+        return $this->subpiece;
+    }
+
+    public function addSubpiece(self $subpiece): static
+    {
+        if (!$this->subpiece->contains($subpiece)) {
+            $this->subpiece->add($subpiece);
+        }
+
+        return $this;
+    }
+
+    public function removeSubpiece(self $subpiece): static
+    {
+        $this->subpiece->removeElement($subpiece);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getSubpieces(): Collection
+    {
+        return $this->subpieces;
     }
 }
