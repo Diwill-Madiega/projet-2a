@@ -5,6 +5,10 @@ type: php:8.3
 runtime:
     extensions:
 
+dependencies:
+    php:
+        ext-pdo_pgsql: "*"
+
 relationships:
     database: 'postgresql:postgresql'
         
