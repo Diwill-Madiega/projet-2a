@@ -4,6 +4,9 @@ type: php:8.3
 
 runtime:
     extensions:
+
+relationships:
+    database: "db:postgresql"
         
 
 #variables:
