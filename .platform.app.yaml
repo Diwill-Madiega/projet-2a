@@ -51,6 +51,7 @@ hooks:
     build: |
         set -x -e
 
+        composer install --prefer-dist --no-progress --no-interaction
         curl -fs https://get.symfony.com/cloud/configurator | bash
         # php-ext-install ctype X.Y.Z
         # php-ext-install iconv X.Y.Z
