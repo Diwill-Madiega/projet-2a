@@ -11,7 +11,7 @@ dependencies:
         ext-pdo_pgsql: "*"
 
 relationships:
-    database: 'postgresql'
+    database: 'postgresql:postgresql'
         
 
 #variables:
