@@ -7,8 +7,8 @@ runtime:
 
 dependencies:
     php:
-        - symfony/flex
-        - ext-pdo_pgsql
+        symfony/flex: "*"
+        ext-pdo_pgsql: "*"
 
 relationships:
     database: 'db:postgresql'
