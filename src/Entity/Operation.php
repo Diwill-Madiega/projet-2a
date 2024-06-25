@@ -33,16 +33,14 @@ class Operation
     #[ORM\ManyToOne(inversedBy: 'operations')]
     private ?Post $post = null;
 
-    /**
-     * @var Collection<int, Machine>
-     */
-    #[ORM\ManyToMany(targetEntity: Machine::class, inversedBy: 'operations')]
-    private Collection $machine;
+    #[ORM\ManyToOne(inversedBy: 'op')]
+    private ?Machine $machine = null;
+
+
 
     public function __construct()
     {
         $this->gammes = new ArrayCollection();
-        $this->machine = new ArrayCollection();
     }
 
     public function __toString()
@@ -130,26 +128,14 @@ class Operation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Machine>
-     */
-    public function getMachine(): Collection
+    public function getMachine(): ?Machine
     {
         return $this->machine;
     }
 
-    public function addMachine(Machine $machine): static
+    public function setMachine(?Machine $machine): static
     {
-        if (!$this->machine->contains($machine)) {
-            $this->machine->add($machine);
-        }
-
-        return $this;
-    }
-
-    public function removeMachine(Machine $machine): static
-    {
-        $this->machine->removeElement($machine);
+        $this->machine = $machine;
 
         return $this;
     }

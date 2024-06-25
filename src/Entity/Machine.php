@@ -39,11 +39,18 @@ class Machine
     #[ORM\ManyToMany(targetEntity: Operation::class, mappedBy: 'machine')]
     private Collection $operations;
 
+    /**
+     * @var Collection<int, Operation>
+     */
+    #[ORM\OneToMany(targetEntity: Operation::class, mappedBy: 'machine')]
+    private Collection $op;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->productions = new ArrayCollection();
         $this->operations = new ArrayCollection();
+        $this->op = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -140,25 +147,28 @@ class Machine
     /**
      * @return Collection<int, Operation>
      */
-    public function getOperations(): Collection
+    public function getOp(): Collection
     {
-        return $this->operations;
+        return $this->op;
     }
 
-    public function addOperation(Operation $operation): static
+    public function addOp(Operation $op): static
     {
-        if (!$this->operations->contains($operation)) {
-            $this->operations->add($operation);
-            $operation->addMachine($this);
+        if (!$this->op->contains($op)) {
+            $this->op->add($op);
+            $op->setMachine($this);
         }
 
         return $this;
     }
 
-    public function removeOperation(Operation $operation): static
+    public function removeOp(Operation $op): static
     {
-        if ($this->operations->removeElement($operation)) {
-            $operation->removeMachine($this);
+        if ($this->op->removeElement($op)) {
+            // set the owning side to null (unless already changed)
+            if ($op->getMachine() === $this) {
+                $op->setMachine(null);
+            }
         }
 
         return $this;

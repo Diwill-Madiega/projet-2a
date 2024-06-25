@@ -29,9 +29,8 @@ class OperationType extends AbstractType
             ->add('machine', EntityType::class, [
                 'class' => Machine::class,
                 'choice_label' => 'name',
-                'multiple' => true,
-                'placeholder' => "Machines",
                 'required' => false,
+                'placeholder' => "Machine",
             ])
         ;
     }

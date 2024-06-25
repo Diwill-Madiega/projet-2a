@@ -24,9 +24,12 @@
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
-                <tr>
                 <th>Rôles</th>
-                <td>{{ user.roles|join(', ') }}</td>
+                <td>{{ user.getRightsRoleName }}</td>
+            </tr>
+            </tr>
+                <th>Qualifications</th>
+                <td>{{ user.qualification ? user.qualification|join(', ') : '' }}</td>
             </tr>
         </tbody>
     </table>

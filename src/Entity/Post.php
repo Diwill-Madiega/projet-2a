@@ -39,11 +39,23 @@ class Post
     #[ORM\OneToMany(targetEntity: Operation::class, mappedBy: 'post')]
     private Collection $operations;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'qualification')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->machine = new ArrayCollection();
         $this->productions = new ArrayCollection();
         $this->operations = new ArrayCollection();
+        $this->users = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name; // or any other string representation of your operation
     }
 
     public function getId(): ?int
@@ -154,6 +166,33 @@ class Post
             if ($operation->getPost() === $this) {
                 $operation->setPost(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addQualification($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeQualification($this);
         }
 
         return $this;

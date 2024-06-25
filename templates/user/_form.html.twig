@@ -19,6 +19,10 @@
         {{ form_label(form.Rights, "Droits", {'label_attr': {'class': 'form-label'}}) }}
         {{ form_widget(form.Rights, {'attr': {'class': 'form-control'}}) }}
     </div>
+        <div class="form-group">
+        {{ form_label(form.qualification, "Qualifications", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.qualification, {'attr': {'class': 'form-control'}}) }}
+    </div>
 
     <button class="btn btn-primary mt-3"> <i class="fas fa-save"></i>{{ button_label|default(' Enregistrer') }}</button>
 {{ form_end(form) }}

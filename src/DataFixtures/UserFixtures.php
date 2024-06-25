@@ -20,12 +20,16 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $droit_ad = new Rights();
-        $droit_ad->setRoleName('Administrateur');
+        $droit_ad->setRoleName('administrateur');
         $manager->persist($droit_ad);
 
         $droit_ouv = new Rights();
-        $droit_ouv->setRoleName('Ouvrier');
+        $droit_ouv->setRoleName('ouvrier');
         $manager->persist($droit_ouv);
+
+        $droit_resp = new Rights();
+        $droit_resp->setRoleName('responsable atelier');
+        $manager->persist($droit_resp);
 
 
         $usersData = [
@@ -44,6 +48,14 @@ class UserFixtures extends Fixture
                 'first_name' => 'Admin',
                 'last_name' => 'User',
                 'right' => $droit_ad,
+            ],
+            [
+                'email' => 'responsable@example.com',
+                'roles' => ['ROLE_USER'],
+                'password' => 'password123',
+                'first_name' => 'Resp',
+                'last_name' => 'Atelier',
+                'right' => $droit_resp,
             ],
         ];
 

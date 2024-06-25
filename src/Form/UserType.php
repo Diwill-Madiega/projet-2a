@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Rights;
 use App\Entity\User;
+use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -42,6 +43,13 @@ class UserType extends AbstractType
                 'class' => Rights::class,
                 'choice_label' => 'role_name',
                 'attr' => ['class' => 'form-control']
+            ])
+
+            ->add('qualification', EntityType::class, [
+                'class' => Post::class,
+                'choice_label' => 'name',
+                'required' => false,
+                'multiple' => 'true',
             ])
         ;
     }

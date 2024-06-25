@@ -17,9 +17,11 @@
                     </div>
                 </div>
             </form>
+            {% if user.getRightsRoleName() == 'responsable atelier' or user.getRightsRoleName() == 'administrateur' %}
             <a href="{{ path('app_machine_new') }}" class="btn btn-success">
                 <i class="fas fa-plus"></i> Créer
             </a>
+            {% endif %}
         </div>
 
         <hr class="anim" style="background-color:darkgray">
@@ -31,15 +33,19 @@
                         <div class="card-body">
                             <p class="card-text text-center"><strong><h3 class="text-center">{{ machine.name }}</strong></h3></p>
                         </div>
+
                         <div class="card-footer d-flex justify-content-between">
                             <a href="{{ path('app_machine_show', {'id':machine.id}) }}" class="btn btn-info">
                                 <i class="fas fa-eye"></i> Voir
                             </a>
+                            {% if user.getRightsRoleName() == 'responsable atelier' or user.getRightsRoleName() == 'administrateur' %}
                             <a href="{{ path('app_machine_edit', {'id': machine.id}) }}" class="btn btn-primary">
                                 <i class="fas fa-edit"></i> Modifier
                             </a>
                             {{ include('machine/_delete_form.html.twig', {'class': 'd-inline'}) }}
+                            {% endif %}
                         </div>
+
                     </div>
                 </div>
             {% else %}

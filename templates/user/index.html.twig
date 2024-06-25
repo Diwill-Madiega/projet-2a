@@ -31,7 +31,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ user.firstName }} {{ user.lastName }}</h5>
                             <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
-                            <p class="card-text"><strong>Roles:</strong> {{ user.roles ? user.roles|join(', ') : '' }}</p>
+                            <p class="card-text"><strong>Roles:</strong> {{ user.getRightsRoleName }}</p>
 
                         </div>
                         <div class="card-footer text-center d-flex justify-content-between">

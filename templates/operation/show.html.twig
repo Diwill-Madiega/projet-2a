@@ -32,9 +32,11 @@
             <a href="{{ path('app_operation_index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Retour
             </a>
+            {% if user.getRightsRoleName() == 'responsable atelier' or user.getRightsRoleName() == 'administrateur' %}
             <a href="{{ path('app_operation_edit', {'id': operation.id}) }}" class="btn btn-primary">
                 <i class="fas fa-edit"></i> Modifier
             </a>
             {{ include('operation/_delete_form.html.twig', {'class': 'd-inline'}) }}
+            {% endif %}
         </div>
 {% endblock %}

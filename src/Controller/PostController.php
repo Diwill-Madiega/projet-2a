@@ -20,15 +20,19 @@ class PostController extends AbstractController
         $search = $request->query->get('search');
         $posts = $postRepository->findBySearch($search);
 
+        // Get the currently authenticated user
+        $user = $this->getUser();
+
         return $this->render('post/index.html.twig', [
             'posts' => $posts,
+            'user' => $user, // Pass the user to the template
         ]);
     }
 
     #[Route('/new', name: 'app_post_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $post = new Post();
+        $post = new post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
@@ -39,17 +43,25 @@ class PostController extends AbstractController
             return $this->redirectToRoute('app_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // Get the currently authenticated user
+        $user = $this->getUser();
+
         return $this->render('post/new.html.twig', [
             'post' => $post,
             'form' => $form,
+            'user' => $user, // Pass the user to the template
         ]);
     }
 
     #[Route('/{id}', name: 'app_post_show', methods: ['GET'])]
     public function show(Post $post): Response
     {
+        // Get the currently authenticated user
+        $user = $this->getUser();
+
         return $this->render('post/show.html.twig', [
             'post' => $post,
+            'user' => $user, // Pass the user to the template
         ]);
     }
 
@@ -65,9 +77,13 @@ class PostController extends AbstractController
             return $this->redirectToRoute('app_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // Get the currently authenticated user
+        $user = $this->getUser();
+
         return $this->render('post/edit.html.twig', [
             'post' => $post,
             'form' => $form,
+            'user' => $user, // Pass the user to the template
         ]);
     }
 

@@ -29,6 +29,7 @@ class GammeType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Pièce',
                 'attr' => ['autocomplete' => 'off'],
+                'required' => false,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('p')
                               ->leftJoin('p.gamme', 'g')

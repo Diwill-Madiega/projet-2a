@@ -57,10 +57,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Production::class, mappedBy: 'creator')]
     private Collection $productions;
 
+    /**
+     * @var Collection<int, Post>
+     */
+    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'users')]
+    private Collection $qualification;
+
     public function __construct()
     {
         $this->gammes = new ArrayCollection();
         $this->productions = new ArrayCollection();
+        $this->qualification = new ArrayCollection();     
     }
 
     public function getId(): ?int
@@ -167,6 +174,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->Rights;
     }
 
+
     public function setRights(?Rights $Rights): static
     {
         $this->Rights = $Rights;
@@ -230,6 +238,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $production->setCreator(null);
             }
         }
+
+        return $this;
+    }
+
+    // New method to get the role_name from the associated Rights entity
+    public function getRightsRoleName(): ?string
+    {
+        return $this->Rights ? $this->Rights->getRoleName() : null;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getQualification(): Collection
+    {
+        return $this->qualification;
+    }
+
+    public function addQualification(Post $qualification): static
+    {
+        if (!$this->qualification->contains($qualification)) {
+            $this->qualification->add($qualification);
+        }
+
+        return $this;
+    }
+
+    public function removeQualification(Post $qualification): static
+    {
+        $this->qualification->removeElement($qualification);
 
         return $this;
     }

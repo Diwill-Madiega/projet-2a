@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const typeField = document.getElementById('piece1_type');
     const buyPriceField = document.getElementById('piece1_buy_price');
     const sellPriceField = document.getElementById('piece1_sell_price');
+    const subpieceField = document.getElementById('piece1_subpieces');
 
     if (!typeField || !buyPriceField || !sellPriceField) {
         console.error('One or more fields are not found in the DOM');
@@ -59,22 +60,23 @@ document.addEventListener('DOMContentLoaded', function () {
             case 'achetée':
                 buyPriceField.disabled = false;
                 sellPriceField.disabled = true;
+                subpieceField.disabled = true;
                 break;
             case 'intermédiaire':
                 buyPriceField.disabled = false;
                 sellPriceField.disabled = false;
+                subpieceField.disabled = false;
                 break;
             case 'livrable':
                 buyPriceField.disabled = true;
                 sellPriceField.disabled = false;
+                subpieceField.disabled = false;
                 break;
             default:
                 buyPriceField.disabled = true;
                 sellPriceField.disabled = true;
+                subpieceField.disabled = true;
         }
-
-        console.log('buyPriceField.disabled:', buyPriceField.disabled);
-        console.log('sellPriceField.disabled:', sellPriceField.disabled);
     }
 
     updateFieldStates();
