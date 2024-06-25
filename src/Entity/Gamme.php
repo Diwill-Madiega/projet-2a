@@ -41,7 +41,7 @@ class Gamme
 
     public function __toString(): string
     {
-        return $this->name; // or any other property that should represent the machine as a string
+        return $this->name;
     }
 
     public function getId(): ?int

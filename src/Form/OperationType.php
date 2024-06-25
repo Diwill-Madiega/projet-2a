@@ -11,6 +11,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class OperationType extends AbstractType
 {
@@ -26,13 +28,27 @@ class OperationType extends AbstractType
                 'placeholder' => "Poste",
                 'attr' => ['autocomplete' => 'off']
             ])
-            ->add('machine', EntityType::class, [
+        ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $form = $event->getForm();
+            $operation = $event->getData();
+
+            $post = $operation->getPost();
+
+            $form->add('machine', EntityType::class, [
                 'class' => Machine::class,
                 'choice_label' => 'name',
                 'required' => false,
                 'placeholder' => "Machine",
-            ])
-        ;
+                'query_builder' => function (EntityRepository $er) use ($post) {
+                    return $er->createQueryBuilder('m')
+                        ->join('m.posts', 'p')
+                        ->where('p.id = :post_id')
+                        ->setParameter('post_id', $post->getId());
+                },
+            ]);
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

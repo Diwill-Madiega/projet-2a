@@ -45,7 +45,7 @@ class Operation
 
     public function __toString()
     {
-        return $this->name; // or any other string representation of your operation
+        return $this->name;
     }
 
     public function getId(): ?int

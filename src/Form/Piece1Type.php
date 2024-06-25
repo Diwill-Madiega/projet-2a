@@ -57,7 +57,6 @@ class Piece1Type extends AbstractType
                 'attr' => ['class' => 'form-control']
             ]);
 
-        // Add initial state event listener
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $data = $event->getData();
             $form = $event->getForm();

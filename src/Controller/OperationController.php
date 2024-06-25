@@ -20,12 +20,11 @@ class OperationController extends AbstractController
         $search = $request->query->get('search');
         $operations = $operationRepository->findBySearch($search);
 
-        // Get the currently authenticated user
         $user = $this->getUser();
 
         return $this->render('operation/index.html.twig', [
             'operations' => $operations,
-            'user' => $user, // Pass the user to the template
+            'user' => $user,
         ]);
     }
 
@@ -43,25 +42,23 @@ class OperationController extends AbstractController
             return $this->redirectToRoute('app_operation_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        // Get the currently authenticated user
         $user = $this->getUser();
 
         return $this->render('operation/new.html.twig', [
             'operation' => $operation,
             'form' => $form,
-            'user' => $user, // Pass the user to the template
+            'user' => $user,
         ]);
     }
 
     #[Route('/{id}', name: 'app_operation_show', methods: ['GET'])]
     public function show(Operation $operation): Response
     {
-        // Get the currently authenticated user
         $user = $this->getUser();
 
         return $this->render('operation/show.html.twig', [
             'operation' => $operation,
-            'user' => $user, // Pass the user to the template
+            'user' => $user,
         ]);
     }
 
@@ -77,13 +74,12 @@ class OperationController extends AbstractController
             return $this->redirectToRoute('app_operation_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        // Get the currently authenticated user
         $user = $this->getUser();
 
         return $this->render('operation/edit.html.twig', [
             'operation' => $operation,
             'form' => $form,
-            'user' => $user, // Pass the user to the template
+            'user' => $user,
         ]);
     }
 

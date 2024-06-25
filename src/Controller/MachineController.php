@@ -21,12 +21,11 @@ class MachineController extends AbstractController
         $search = $request->query->get('search');
         $machines = $machineRepository->findBySearch($search);
 
-        // Get the currently authenticated user
         $user = $this->getUser();
 
         return $this->render('machine/index.html.twig', [
             'machines' => $machines,
-            'user' => $user, // Pass the user to the template
+            'user' => $user,
         ]);
     }
 
@@ -44,25 +43,23 @@ class MachineController extends AbstractController
             return $this->redirectToRoute('app_machine_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        // Get the currently authenticated user
         $user = $this->getUser();
 
         return $this->render('machine/new.html.twig', [
             'machine' => $machine,
             'form' => $form,
-            'user' => $user, // Pass the user to the template
+            'user' => $user,
         ]);
     }
 
     #[Route('/{id}', name: 'app_machine_show', methods: ['GET'])]
     public function show(Machine $machine): Response
     {
-        // Get the currently authenticated user
         $user = $this->getUser();
 
         return $this->render('machine/show.html.twig', [
             'machine' => $machine,
-            'user' => $user, // Pass the user to the template
+            'user' => $user,
         ]);
     }
 
@@ -78,13 +75,12 @@ class MachineController extends AbstractController
             return $this->redirectToRoute('app_machine_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        // Get the currently authenticated user
         $user = $this->getUser();
 
         return $this->render('machine/edit.html.twig', [
             'machine' => $machine,
             'form' => $form,
-            'user' => $user, // Pass the user to the template
+            'user' => $user,
         ]);
     }
 

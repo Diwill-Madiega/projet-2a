@@ -55,7 +55,7 @@ class Machine
 
     public function __toString(): string
     {
-        return $this->name; // or any other property that should represent the machine as a string
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -135,7 +135,6 @@ class Machine
     public function removeProduction(Production $production): static
     {
         if ($this->productions->removeElement($production)) {
-            // set the owning side to null (unless already changed)
             if ($production->getMachine() === $this) {
                 $production->setMachine(null);
             }
@@ -165,7 +164,6 @@ class Machine
     public function removeOp(Operation $op): static
     {
         if ($this->op->removeElement($op)) {
-            // set the owning side to null (unless already changed)
             if ($op->getMachine() === $this) {
                 $op->setMachine(null);
             }

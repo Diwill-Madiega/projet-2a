@@ -42,10 +42,12 @@
             <a href="{{ path('app_gamme_index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Retour
             </a>
+            {% if user == gamme.owner or user.getRightsRoleName() == 'administrateur' %}
             <a href="{{ path('app_gamme_edit', {'id': gamme.id}) }}" class="btn btn-primary">
                 <i class="fas fa-edit"></i> Modifier
             </a>
             {{ include('gamme/_delete_form.html.twig', {'class': 'd-inline'}) }}
+            {% endif %}
         </div>
 </div>
 {% endblock %}

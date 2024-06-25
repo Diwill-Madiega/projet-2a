@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fabrication{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1><strong>Fabriquer la pièce</strong></h1>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Détails de la pièce
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ piece.name }} (Réf: {{ piece.ref }})</h5>
+            <p class="card-text"><strong>Id:</strong> {{ piece.id }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Détails de la gamme
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ piece.gamme.name }}</h5>
+            <p class="card-text"><strong>Gamme Id:</strong> {{ piece.gamme.id }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Opérations
+        </div>
+        <div class="card-body">
+            {% if piece.gamme.operation is empty %}
+                <p class="card-text">Aucune opération trouvée</p>
+            {% else %}
+                {% for op in piece.gamme.operation %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ op.name }}</h5>
+                            <p class="card-text">
+                                <strong>Poste:</strong> {{ op.post.name }}<br>
+                                <strong>Machine:</strong> {{ op.machine.name }}<br>
+                                <strong>Durée (min):</strong> {{ op.duration }}
+                            </p>
+                            <form method="post" action="{{ path('app_operation_edit', {'id': op.id}) }}">
+                                <div class="form-group">
+                                    <label for="opName{{ op.id }}">Nom</label>
+                                    <input type="text" class="form-control" id="opName{{ op.id }}" name="opName" value="{{ op.name }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="opPost{{ op.id }}">Poste</label>
+                                    <select class="form-control" id="opPost{{ op.id }}" name="opPost">
+                                        {% for post in qualifiedPosts %}
+                                            <option value="{{ post.id }}" {% if post.id == op.post.id %}selected{% endif %}>{{ post.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="opMachine{{ op.id }}">Machine</label>
+                                    <select class="form-control" id="opMachine{{ op.id }}" name="opMachine">
+                                        {% for machine in machines %}
+                                            <option value="{{ machine.id }}" {% if machine.id == op.machine.id %}selected{% endif %}>{{ machine.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="opDuration{{ op.id }}">Durée (min)</label>
+                                    <input type="number" class="form-control" id="opDuration{{ op.id }}" name="opDuration" value="{{ op.duration }}">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ path('app_manufacturing_new') }}" class="btn btn-primary">
+            <i class="fas fa-tools"></i> Fabriquer
+        </a>
+    </div>
+</div>
+{% endblock %}

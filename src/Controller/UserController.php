@@ -35,7 +35,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hash the password if it's set
             $plainPassword = $form->get('password')->getData();
             if ($plainPassword) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
@@ -69,7 +68,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hash the password if it's set
             $plainPassword = $form->get('password')->getData();
             if ($plainPassword) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
@@ -101,15 +99,14 @@ class UserController extends AbstractController
     #[Route('/user/', name: 'user_dashboard')]
     public function userDashboard(Security $security): Response
     {
-        // Check if the user has ROLE_USER but not ROLE_ADMIN
+
         if ($security->isGranted('ROLE_USER') && !$security->isGranted('ROLE_ADMIN')) {
-            // Redirect to /home if the user only has ROLE_USER
+
             return $this->redirectToRoute('homepage');
         }
 
-        // Proceed with your logic if the user has ROLE_ADMIN
         if (!$security->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException('Access Denied.');
+            throw new AccessDeniedException('Accès refusé.');
         }
 
         return $this->render('user/dashboard.html.twig');

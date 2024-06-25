@@ -24,7 +24,7 @@ class Piece
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $buy_price = null; // Updated field
+    private ?float $buy_price = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $gamme_name = null;
@@ -173,12 +173,10 @@ class Piece
 
     public function setGamme(?Gamme $gamme): static
     {
-        // unset the owning side of the relation if necessary
         if ($gamme === null && $this->gamme !== null) {
             $this->gamme->setPiece(null);
         }
 
-        // set the owning side of the relation if necessary
         if ($gamme !== null && $gamme->getPiece() !== $this) {
             $gamme->setPiece($this);
         }

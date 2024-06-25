@@ -55,7 +55,7 @@ class Post
 
     public function __toString()
     {
-        return $this->name; // or any other string representation of your operation
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -132,7 +132,6 @@ class Post
     public function removeProduction(Production $production): static
     {
         if ($this->productions->removeElement($production)) {
-            // set the owning side to null (unless already changed)
             if ($production->getPost() === $this) {
                 $production->setPost(null);
             }
@@ -162,7 +161,6 @@ class Post
     public function removeOperation(Operation $operation): static
     {
         if ($this->operations->removeElement($operation)) {
-            // set the owning side to null (unless already changed)
             if ($operation->getPost() === $this) {
                 $operation->setPost(null);
             }

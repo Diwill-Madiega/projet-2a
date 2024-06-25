@@ -39,6 +39,21 @@ body {
     text-align:center;
 }
 
+.btn-create {
+    background-color:blueviolet;
+}
+.btn-create:hover {
+    background-color:rgb(121, 28, 168);
+}
+.btn-create:active {
+    background-color:rgb(121, 28, 168);
+}
+.btn-create:focus {
+    outline-color: transparent;
+    outline-style:solid;
+    box-shadow: 0 0 0 4px #5a01a7;
+}
+
 .anim {
     opacity: 0;
     animation: fadeInUp 0.5s ease-in-out forwards;

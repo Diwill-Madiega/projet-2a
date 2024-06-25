@@ -105,7 +105,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -203,7 +202,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeGamme(Gamme $gamme): static
     {
         if ($this->gammes->removeElement($gamme)) {
-            // set the owning side to null (unless already changed)
             if ($gamme->getOwner() === $this) {
                 $gamme->setOwner(null);
             }
@@ -233,7 +231,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeProduction(Production $production): static
     {
         if ($this->productions->removeElement($production)) {
-            // set the owning side to null (unless already changed)
             if ($production->getCreator() === $this) {
                 $production->setCreator(null);
             }
@@ -242,11 +239,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // New method to get the role_name from the associated Rights entity
     public function getRightsRoleName(): ?string
     {
         return $this->Rights ? $this->Rights->getRoleName() : null;
     }
+
+    
 
     /**
      * @return Collection<int, Post>
