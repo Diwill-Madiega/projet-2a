@@ -5,8 +5,13 @@ type: php:8.3
 runtime:
     extensions:
 
+dependencies:
+    php:
+        - symfony/flex
+        - ext-pdo_pgsql
+
 relationships:
-    database: "db:postgresql"
+    database: 'db:postgresql'
         
 
 #variables:
