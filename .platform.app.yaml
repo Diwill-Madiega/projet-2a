@@ -9,8 +9,8 @@ runtime:
 #     php:
 #         ext-pdo_pgsql: "*"
 
-# relationships:
-#     database: 'postgresql:postgresql'
+relationships:
+    database: "postgresql:postgresql"
         
 
 #variables:
