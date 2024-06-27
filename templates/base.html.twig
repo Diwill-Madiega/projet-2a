@@ -22,6 +22,8 @@
         {% set navbar_class = 'navbar-user' %}
         {% if is_granted('ROLE_ADMIN') %}
             {% set navbar_class = 'navbar-admin' %}
+        {% elseif is_granted('ROLE_TRADER') %}
+            {% set navbar_class = 'navbar-comm' %}
         {% endif %}
 
         <nav class="navbar navbar-expand-lg {{ navbar_class }} shadow">
@@ -53,9 +55,9 @@
                             <div class="dropdown-menu white-text" aria-labelledby="adminDropdown">
                                 <a class="dropdown-item" href="#">Devis</a>
                                 <a class="dropdown-item" href="#">Commandes vente</a>
-                                <a class="dropdown-item" href="#">Commandes achat</a>
-                                <a class="dropdown-item" href="#">Clients</a>
-                                <a class="dropdown-item" href="#">Fournisseurs</a>
+                                <a class="dropdown-item" href="{{ path('app_buy_order_index') }}">Commandes achat</a>
+                                <a class="dropdown-item" href="{{ path('app_customer_index') }}">Clients</a>
+                                <a class="dropdown-item" href="{{ path('app_furnisher_index') }}">Fournisseurs</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -67,6 +69,23 @@
                                 <a class="dropdown-item" href="#">Droits</a>
                             </div>
                         </li>
+                    {% elseif is_granted ('ROLE_TRADER') %}
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="#"><i class="fas fa-file-invoice-dollar"></i> Devis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="#"><i class="fas fa-money-check-alt"></i> Commandes vente</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="{{ path('app_buy_order_index') }}"><i class="fas fa-money-check-alt"></i> Commandes achat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="{{ path('app_customer_index') }}"><i class="fas fa-user-tag"></i> Clients</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="{{ path('app_furnisher_index') }}"><i class="fas fa-user-tie"></i> Fournisseurs</a>
+                        </li>
+
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link white-text" href="{{ path('app_piece_index') }}"><i class="fas fa-cogs"></i> Pièces</a>

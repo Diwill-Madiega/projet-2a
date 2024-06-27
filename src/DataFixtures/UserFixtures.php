@@ -31,6 +31,10 @@ class UserFixtures extends Fixture
         $droit_resp->setRoleName('responsable atelier');
         $manager->persist($droit_resp);
 
+        $droit_comm = new Rights();
+        $droit_comm->setRoleName('commercial');
+        $manager->persist($droit_comm);
+
 
         $usersData = [
             [
@@ -56,6 +60,14 @@ class UserFixtures extends Fixture
                 'first_name' => 'Resp',
                 'last_name' => 'Atelier',
                 'right' => $droit_resp,
+            ],
+            [
+                'email' => 'commercial@example.com',
+                'roles' => ['ROLE_TRADER'],
+                'password' => 'password123',
+                'first_name' => 'Commercial',
+                'last_name' => 'Man',
+                'right' => $droit_comm,
             ],
         ];
 

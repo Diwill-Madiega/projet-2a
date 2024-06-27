@@ -42,7 +42,8 @@ class UserType extends AbstractType
             ->add('Rights', EntityType::class, [
                 'class' => Rights::class,
                 'choice_label' => 'role_name',
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'placeholder' => 'Sélectionnez un rôle',
             ])
 
             ->add('qualification', EntityType::class, [

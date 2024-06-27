@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le fournisseur{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4"><strong>Modifier le fournisseur</strong></h1>
+
+        <div class="card">
+            <div class="card-body">
+                {{ include('furnisher/_form.html.twig', {'button_label': ' Enregistrer'}) }}
+            </div>
+        </div>
+
+        <div class="mt-4">
+        <a class="btn btn-secondary" href="{{ path('app_furnisher_index') }}"><i class="fas fa-arrow-left"></i> Retour</a>
+        {{ include('furnisher/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
