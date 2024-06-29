@@ -19,6 +19,7 @@ class BuyOrderType extends AbstractType
             ->add('price')
             ->add('amount')
             ->add('type')
+            ->add('date')
 
             ->add('type', ChoiceType::class, [
                 'choices'  => [

@@ -29,6 +29,11 @@
                 <td>{{ buy_order.type }}</td>
             </tr>
             <tr>
+                <th>Date</th>
+                <td>{{ buy_order.date ? buy_order.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            </tr>
+            <tr>
                 <th>Fournisseur</th>
                 <td>{{ buy_order.furnisher.name }}</td>
             </tr>

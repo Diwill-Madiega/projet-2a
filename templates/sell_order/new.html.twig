@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle commande{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-4 mb-4"><strong>Créer une commande de vente</strong></h1>
+
+    <div class="mt-4">
+        {{ include('sell_order/_form.html.twig') }}
+        <a href="{{ path('app_sell_order_index') }}" class="btn btn-secondary mt-2"><i class="fas fa-arrow-left"></i> Retour</a>
+    </div>
+</div>
+{% endblock %}
