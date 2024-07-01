@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SellOrderLine{% endblock %}
+
+{% block body %}
+    <h1>Create new SellOrderLine</h1>
+
+    {{ include('sell_order_line/_form.html.twig') }}
+
+    <a href="{{ path('app_sell_order_line_index') }}">back to list</a>
+{% endblock %}

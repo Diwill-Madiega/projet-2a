@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SellOrderLine index{% endblock %}
+
+{% block body %}
+    <h1>SellOrderLine index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Date</th>
+                <th>Detail</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sell_order_line in sell_order_lines %}
+            <tr>
+                <td>{{ sell_order_line.id }}</td>
+                <td>{{ sell_order_line.amount }}</td>
+                <td>{{ sell_order_line.price }}</td>
+                <td>{{ sell_order_line.date ? sell_order_line.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ sell_order_line.detail }}</td>
+                <td>
+                    <a href="{{ path('app_sell_order_line_show', {'id': sell_order_line.id}) }}">show</a>
+                    <a href="{{ path('app_sell_order_line_edit', {'id': sell_order_line.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sell_order_line_new') }}">Create new</a>
+{% endblock %}

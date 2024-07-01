@@ -53,9 +53,10 @@
                                 <i class="fas fa-comment-dollar white-text"></i> Commercial
                             </a>
                             <div class="dropdown-menu white-text" aria-labelledby="adminDropdown">
-                                <a class="dropdown-item" href="#">Devis</a>
+                                <a class="dropdown-item" href="{{ path('app_devis_index') }}">Devis</a>
+                                <a class="dropdown-item" href="{{ path('app_devis_index') }}">Lignes Devis</a>
                                 <a class="dropdown-item" href="{{ path('app_sell_order_index') }}">Commandes vente</a>
-                                <a class="dropdown-item" href="{{ path('app_buy_order_line_index') }}">Lignes commandes vente</a>
+                                <a class="dropdown-item" href="{{ path('app_sell_order_line_index') }}">Lignes commandes vente</a>
                                 <a class="dropdown-item" href="{{ path('app_buy_order_index') }}">Commandes achat</a>
                                 <a class="dropdown-item" href="{{ path('app_buy_order_line_index') }}">Lignes commandes achat</a>
                                 <a class="dropdown-item" href="{{ path('app_customer_index') }}">Clients</a>
