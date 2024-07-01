@@ -16,6 +16,18 @@ class BuyOrderRepository extends ServiceEntityRepository
         parent::__construct($registry, BuyOrder::class);
     }
 
+    public function findBySearch(?string $search): array
+    {
+        $qb = $this->createQueryBuilder('b');
+
+        if ($search) {
+            $qb->andWhere('LOWER(b.name) LIKE LOWER(:search)')
+               ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return BuyOrder[] Returns an array of BuyOrder objects
     //     */

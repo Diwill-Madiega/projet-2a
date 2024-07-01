@@ -16,6 +16,18 @@ class SellOrderRepository extends ServiceEntityRepository
         parent::__construct($registry, SellOrder::class);
     }
 
+    public function findBySearch(?string $search): array
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if ($search) {
+            $qb->andWhere('LOWER(s.name) LIKE LOWER(:search)')
+               ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return SellOrder[] Returns an array of SellOrder objects
     //     */

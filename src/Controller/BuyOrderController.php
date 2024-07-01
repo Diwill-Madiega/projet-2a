@@ -15,10 +15,16 @@ use Symfony\Component\Routing\Attribute\Route;
 class BuyOrderController extends AbstractController
 {
     #[Route('/', name: 'app_buy_order_index', methods: ['GET'])]
-    public function index(BuyOrderRepository $buyOrderRepository): Response
+    public function index(BuyOrderRepository $buyOrderRepository, Request $request): Response
     {
+        $search = $request->query->get('search');
+        $buyOrders = $buyOrderRepository->findBySearch($search);
+
+        $user = $this->getUser();
+
         return $this->render('buy_order/index.html.twig', [
-            'buy_orders' => $buyOrderRepository->findAll(),
+            'buy_orders' => $buyOrders,
+            'user' => $user,
         ]);
     }
 
