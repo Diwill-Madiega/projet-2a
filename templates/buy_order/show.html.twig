@@ -17,26 +17,22 @@
                 <td>{{ buy_order.name }}</td>
             </tr>
             <tr>
-                <th>Coût</th>
-                <td>{{ buy_order.price }}</td>
-            </tr>
-            <tr>
-                <th>Quantité</th>
-                <td>{{ buy_order.amount }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ buy_order.type }}</td>
-            </tr>
-            <tr>
                 <th>Date</th>
                 <td>{{ buy_order.date ? buy_order.date|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
-            </tr>
             <tr>
-                <th>Fournisseur</th>
-                <td>{{ buy_order.furnisher.name }}</td>
-            </tr>
+        <th>Lignes commande</th>
+        <td>
+            <ul>
+                {% for line in buy_order.buyOrderLines %}
+                    <li>
+                        <!-- Adjust these properties according to your buyOrderLine entity -->
+                        ID:{{ line.id }} | Prix:{{ line.price }} | Quantité {{ line.amount }} | {{ line.piece.name }} | {{ line.furnisher.name }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
             
         </tbody>
     </table>

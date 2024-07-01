@@ -16,27 +16,8 @@ class BuyOrderType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('price')
-            ->add('amount')
-            ->add('type')
             ->add('date')
 
-            ->add('type', ChoiceType::class, [
-                'choices'  => [
-                    'matière première' => 'matière première',
-                    'intermédiaire' => 'intermédiaire',
-                    'achetée' => 'achetée',
-                ],
-                'placeholder' => 'Sélectionnez un type',
-                'required' => true,
-                'attr' => ['class' => 'form-control']
-            ])
-
-            ->add('furnisher', EntityType::class, [
-                'class' => Furnisher::class,
-                'choice_label' => 'name',
-                'placeholder' => 'Sélectionnez un fournisseur',
-            ])
         ;
     }
 

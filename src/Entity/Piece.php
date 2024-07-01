@@ -59,10 +59,17 @@ class Piece
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'subpiece')]
     private Collection $subpieces;
 
+    /**
+     * @var Collection<int, BuyOrderLine>
+     */
+    #[ORM\OneToMany(targetEntity: BuyOrderLine::class, mappedBy: 'piece')]
+    private Collection $buyOrderLines;
+
     public function __construct()
     {
         $this->subpiece = new ArrayCollection();
         $this->subpieces = new ArrayCollection();
+        $this->buyOrderLines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -228,5 +235,35 @@ class Piece
     public function getSubpieces(): Collection
     {
         return $this->subpieces;
+    }
+
+    /**
+     * @return Collection<int, BuyOrderLine>
+     */
+    public function getBuyOrderLines(): Collection
+    {
+        return $this->buyOrderLines;
+    }
+
+    public function addBuyOrderLine(BuyOrderLine $buyOrderLine): static
+    {
+        if (!$this->buyOrderLines->contains($buyOrderLine)) {
+            $this->buyOrderLines->add($buyOrderLine);
+            $buyOrderLine->setPiece($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBuyOrderLine(BuyOrderLine $buyOrderLine): static
+    {
+        if ($this->buyOrderLines->removeElement($buyOrderLine)) {
+            // set the owning side to null (unless already changed)
+            if ($buyOrderLine->getPiece() === $this) {
+                $buyOrderLine->setPiece(null);
+            }
+        }
+
+        return $this;
     }
 }

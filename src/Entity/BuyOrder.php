@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BuyOrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,21 +19,22 @@ class BuyOrder
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?float $price = null;
-
-    #[ORM\Column]
-    private ?int $amount = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
     #[ORM\ManyToOne(inversedBy: 'buyOrders')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Furnisher $furnisher = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
+
+    /**
+     * @var Collection<int, BuyOrderLine>
+     */
+    #[ORM\OneToMany(targetEntity: BuyOrderLine::class, mappedBy: 'buyOrder')]
+    private Collection $buyOrderLines;
+
+    public function __construct()
+    {
+        $this->buyOrderLines = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -50,53 +53,6 @@ class BuyOrder
         return $this;
     }
 
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    public function getAmount(): ?int
-    {
-        return $this->amount;
-    }
-
-    public function setAmount(int $amount): static
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getFurnisher(): ?Furnisher
-    {
-        return $this->furnisher;
-    }
-
-    public function setFurnisher(?Furnisher $furnisher): static
-    {
-        $this->furnisher = $furnisher;
-
-        return $this;
-    }
 
     public function getDate(): ?\DateTimeInterface
     {
@@ -106,6 +62,36 @@ class BuyOrder
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BuyOrderLine>
+     */
+    public function getBuyOrderLines(): Collection
+    {
+        return $this->buyOrderLines;
+    }
+
+    public function addBuyOrderLine(BuyOrderLine $buyOrderLine): static
+    {
+        if (!$this->buyOrderLines->contains($buyOrderLine)) {
+            $this->buyOrderLines->add($buyOrderLine);
+            $buyOrderLine->setBuyOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBuyOrderLine(BuyOrderLine $buyOrderLine): static
+    {
+        if ($this->buyOrderLines->removeElement($buyOrderLine)) {
+            // set the owning side to null (unless already changed)
+            if ($buyOrderLine->getBuyOrder() === $this) {
+                $buyOrderLine->setBuyOrder(null);
+            }
+        }
 
         return $this;
     }
