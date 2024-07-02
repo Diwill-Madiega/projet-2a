@@ -16,6 +16,18 @@ class BuyOrderLineRepository extends ServiceEntityRepository
         parent::__construct($registry, BuyOrderLine::class);
     }
 
+    public function findBySearch(?string $search): array
+    {
+        $qb = $this->createQueryBuilder('bl');
+
+        if ($search) {
+            $qb->andWhere('(bl.amount) = (:search)')
+               ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return BuyOrderLine[] Returns an array of BuyOrderLine objects
     //     */

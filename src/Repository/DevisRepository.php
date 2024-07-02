@@ -16,6 +16,18 @@ class DevisRepository extends ServiceEntityRepository
         parent::__construct($registry, Devis::class);
     }
 
+    public function findBySearch(?string $search): array
+    {
+        $qb = $this->createQueryBuilder('d');
+
+        if ($search) {
+            $qb->andWhere('LOWER(d.name) LIKE LOWER(:search)')
+               ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Devis[] Returns an array of Devis objects
     //     */

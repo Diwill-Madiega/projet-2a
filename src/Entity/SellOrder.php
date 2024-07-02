@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SellOrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,11 +22,20 @@ class SellOrder
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column]
-    private ?float $price = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $detail = null;
+
+    /**
+     * @var Collection<int, SellOrderLine>
+     */
+    #[ORM\OneToMany(targetEntity: SellOrderLine::class, mappedBy: 'sellOrder')]
+    private Collection $sellOrderLines;
+
+    public function __construct()
+    {
+        $this->sellOrderLines = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -55,18 +66,6 @@ class SellOrder
         return $this;
     }
 
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     public function getDetail(): ?string
     {
         return $this->detail;
@@ -75,6 +74,36 @@ class SellOrder
     public function setDetail(?string $detail): static
     {
         $this->detail = $detail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SellOrderLine>
+     */
+    public function getSellOrderLines(): Collection
+    {
+        return $this->sellOrderLines;
+    }
+
+    public function addSellOrderLine(SellOrderLine $sellOrderLine): static
+    {
+        if (!$this->sellOrderLines->contains($sellOrderLine)) {
+            $this->sellOrderLines->add($sellOrderLine);
+            $sellOrderLine->setSellOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSellOrderLine(SellOrderLine $sellOrderLine): static
+    {
+        if ($this->sellOrderLines->removeElement($sellOrderLine)) {
+            // set the owning side to null (unless already changed)
+            if ($sellOrderLine->getSellOrder() === $this) {
+                $sellOrderLine->setSellOrder(null);
+            }
+        }
 
         return $this;
     }

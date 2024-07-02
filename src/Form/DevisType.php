@@ -24,7 +24,7 @@ class DevisType extends AbstractType
             ->add('totalCost')
             ->add('customer', EntityType::class, [
                 'class' => Customer::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
         ;
     }

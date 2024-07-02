@@ -15,45 +15,51 @@ use Symfony\Component\Routing\Attribute\Route;
 class DevisController extends AbstractController
 {
     #[Route('/', name: 'app_devis_index', methods: ['GET'])]
-    public function index(DevisRepository $devisRepository): Response
+    public function index(DevisRepository $devisRepository, Request $request): Response
     {
+        $search = $request->query->get('search');
+        $devis = $devisRepository->findBySearch($search);
+
+        $user = $this->getUser();
+
         return $this->render('devis/index.html.twig', [
-            'devis' => $devisRepository->findAll(),
+            'devis' => $devis,
+            'user' => $user,
         ]);
     }
 
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $devi = new Devis();
-        $form = $this->createForm(DevisType::class, $devi);
+        $devis = new Devis();
+        $form = $this->createForm(DevisType::class, $devis);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($devi);
+            $entityManager->persist($devis);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('devis/new.html.twig', [
-            'devi' => $devi,
+            'devis' => $devis,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
-    public function show(Devis $devi): Response
+    public function show(Devis $devis): Response
     {
         return $this->render('devis/show.html.twig', [
-            'devi' => $devi,
+            'devis' => $devis,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_devis_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Devis $devi, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Devis $devis, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(DevisType::class, $devi);
+        $form = $this->createForm(DevisType::class, $devis);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,16 +69,16 @@ class DevisController extends AbstractController
         }
 
         return $this->render('devis/edit.html.twig', [
-            'devi' => $devi,
+            'devis' => $devis,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_devis_delete', methods: ['POST'])]
-    public function delete(Request $request, Devis $devi, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Devis $devis, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$devi->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($devi);
+        if ($this->isCsrfTokenValid('delete'.$devis->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($devis);
             $entityManager->flush();
         }
 

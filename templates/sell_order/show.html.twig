@@ -17,10 +17,6 @@
                 <td>{{ sell_order.name }}</td>
             </tr>
             <tr>
-                <th>Coût</th>
-                <td>{{ sell_order.price }}</td>
-            </tr>
-            <tr>
                 <th>Date</th>
                 <td>{{ sell_order.date ? sell_order.date|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
@@ -28,6 +24,20 @@
                 <th>Détails</th>
                 <td>{{ sell_order.detail }}</td>
             </tr>
+                    <th>Lignes commande</th>
+            <td>
+                <ul>
+                    {% set total_price = 0 %}
+                        {% for line in sell_order.sellOrderLines %}
+                            {% set total_price = total_price + line.price %}
+                        <li>
+                        <!-- Adjust these properties according to your sellOrderLine entity -->
+                        ID:{{ line.id }} | Prix:{{ line.price }} | Quantité {{ line.amount }} | {{ line.piece.name }}
+                        </li>
+                        {% endfor %}
+                </ul>
+            <p>Prix total: {{ total_price }}</p>
+        </td>
             
         </tbody>
     </table>

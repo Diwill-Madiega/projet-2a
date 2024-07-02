@@ -16,6 +16,18 @@ class SellOrderLineRepository extends ServiceEntityRepository
         parent::__construct($registry, SellOrderLine::class);
     }
 
+    public function findBySearch(?string $search): array
+    {
+        $qb = $this->createQueryBuilder('sl');
+
+        if ($search) {
+            $qb->andWhere('LOWER(sl.name) LIKE LOWER(:search)')
+               ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return SellOrderLine[] Returns an array of SellOrderLine objects
     //     */

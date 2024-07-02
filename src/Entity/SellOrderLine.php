@@ -30,6 +30,10 @@ class SellOrderLine
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $detail = null;
 
+    #[ORM\ManyToOne(inversedBy: 'sellOrderLines')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?SellOrder $sellOrder = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +95,18 @@ class SellOrderLine
     public function setDetail(?string $detail): static
     {
         $this->detail = $detail;
+
+        return $this;
+    }
+
+    public function getSellOrder(): ?SellOrder
+    {
+        return $this->sellOrder;
+    }
+
+    public function setSellOrder(?SellOrder $sellOrder): static
+    {
+        $this->sellOrder = $sellOrder;
 
         return $this;
     }

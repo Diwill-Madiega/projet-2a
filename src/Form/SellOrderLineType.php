@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Piece;
 use App\Entity\SellOrderLine;
+use App\Entity\SellOrder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,10 +20,13 @@ class SellOrderLineType extends AbstractType
             ->add('date', null, [
                 'widget' => 'single_text',
             ])
-            ->add('detail')
             ->add('piece', EntityType::class, [
                 'class' => Piece::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
+            ])
+            ->add('sellOrder', EntityType::class, [
+                'class' => SellOrder::class,
+                'choice_label' => 'name',
             ])
         ;
     }

@@ -16,7 +16,6 @@ class SellOrderType extends AbstractType
             ->add('date', null, [
                 'widget' => 'single_text',
             ])
-            ->add('price')
             ->add('detail')
         ;
     }

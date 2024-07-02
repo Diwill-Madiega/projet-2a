@@ -74,13 +74,27 @@
                         </li>
                     {% elseif is_granted ('ROLE_TRADER') %}
                         <li class="nav-item">
-                            <a class="nav-link white-text" href="#"><i class="fas fa-file-invoice-dollar"></i> Devis</a>
-                        </li>
+                            <a class="nav-link white-text" href="{{ path('app_devis_index') }}"><i class="fas fa-file-invoice-dollar"></i> Devis</a>
+                        <li class="nav-item dropdown">
                         <li class="nav-item">
-                            <a class="nav-link white-text" href="{{ path('app_sell_order_index') }}"><i class="fas fa-money-check-alt"></i> Commandes vente</a>
+                            <a class="nav-link white-text" href="{{ path('app_devis_index') }}"><i class="fas fa-grip-lines"></i> Lignes Devis</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle white-text" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-hand-holding-usd"></i> Achat
+                            </a>
+                            <div class="dropdown-menu white-text" aria-labelledby="adminDropdown">
+                                <a class="dropdown-item" href="{{ path('app_buy_order_index') }}">Commandes</a>
+                                <a class="dropdown-item" href="{{ path('app_buy_order_line_index') }}">Lignes commandes</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link white-text" href="{{ path('app_buy_order_index') }}"><i class="fas fa-money-check-alt"></i> Commandes achat</a>
+                            <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle white-text" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-funnel-dollar"></i> Vente
+                            </a>
+                            <div class="dropdown-menu white-text" aria-labelledby="adminDropdown">
+                                <a class="dropdown-item" href="{{ path('app_sell_order_index') }}">Commandes</a>
+                                <a class="dropdown-item" href="{{ path('app_sell_order_line_index') }}">Lignes commandes</a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link white-text" href="{{ path('app_customer_index') }}"><i class="fas fa-user-tag"></i> Clients</a>

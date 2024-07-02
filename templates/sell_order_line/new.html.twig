@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New SellOrderLine{% endblock %}
+{% block title %}Nouvelle ligne de commande{% endblock %}
 
 {% block body %}
-    <h1>Create new SellOrderLine</h1>
+<div class="container">
+    <h1 class="mt-4 mb-4"><strong>Créer une ligne de commande de vente</strong></h1>
 
-    {{ include('sell_order_line/_form.html.twig') }}
-
-    <a href="{{ path('app_sell_order_line_index') }}">back to list</a>
+    <div class="mt-4">
+        {{ include('sell_order_line/_form.html.twig') }}
+        <a href="{{ path('app_sell_order_line_index') }}" class="btn btn-secondary mt-2"><i class="fas fa-arrow-left"></i> Retour</a>
+    </div>
+</div>
 {% endblock %}
