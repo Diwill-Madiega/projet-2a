@@ -25,13 +25,25 @@
                 <td>{{ devis.deadline ? devis.deadline|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Coût total</th>
-                <td>{{ devis.totalCost }}</td>
-            </tr>
-            <tr>
                 <th>Client</th>
                 <td>{{ devis.customer.name }}</td>
             </tr>
+                        <tr>
+        <th>Lignes commande</th>
+            <td>
+                <ul>
+                    {% set total_price = 0 %}
+                        {% for line in devis.devisLines %}
+                            {% set total_price = total_price + line.price %}
+                        <li>
+                        <!-- Adjust these properties according to your buyOrderLine entity -->
+                        ID:{{ line.id }} | {{ line.piece.name }} x {{ line.amount }} pour {{ line.price }} €
+                        </li>
+                        {% endfor %}
+                </ul>
+            <p>Prix total: {{ total_price }}</p>
+        </td>
+    </tr>
         </tbody>
     </table>
 

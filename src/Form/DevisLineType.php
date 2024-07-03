@@ -17,7 +17,7 @@ class DevisLineType extends AbstractType
         ->add('piece', EntityType::class, [
             'class' => Piece::class,
             'choice_label' => 'name',
-            'placeholder' => ''
+            'placeholder' => 'Sélectionner une pièce',
         ])
             ->add('amount')
             ->add('price')

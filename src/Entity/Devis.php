@@ -1,8 +1,12 @@
 <?php
 
+// src/Entity/Devis.php
+
 namespace App\Entity;
 
 use App\Repository\DevisRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +33,17 @@ class Devis
 
     #[ORM\Column]
     private ?float $totalCost = null;
+
+    /**
+     * @var Collection<int, DevisLine>
+     */
+    #[ORM\OneToMany(targetEntity: DevisLine::class, mappedBy: 'devis', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $devisLines;
+
+    public function __construct()
+    {
+        $this->devisLines = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,6 +106,36 @@ class Devis
     public function setTotalCost(float $totalCost): static
     {
         $this->totalCost = $totalCost;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DevisLine>
+     */
+    public function getDevisLines(): Collection
+    {
+        return $this->devisLines;
+    }
+
+    public function addDevisLine(DevisLine $devisLine): static
+    {
+        if (!$this->devisLines->contains($devisLine)) {
+            $this->devisLines->add($devisLine);
+            $devisLine->setDevis($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevisLine(DevisLine $devisLine): static
+    {
+        if ($this->devisLines->removeElement($devisLine)) {
+            // set the owning side to null (unless already changed)
+            if ($devisLine->getDevis() === $this) {
+                $devisLine->setDevis(null);
+            }
+        }
 
         return $this;
     }
