@@ -5,6 +5,11 @@ controllers:
     type: attribute
 
 
+load_fixtures:
+    path: /load_fixtures
+    controller: App\Controller\LoadFixturesController::loadFixtures
+    methods: [GET]  # Adjust the HTTP method as needed
+
 app_login:
     path: /
     controller: App\Controller\LoginController::login
