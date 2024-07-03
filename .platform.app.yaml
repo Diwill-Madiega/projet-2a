@@ -29,6 +29,11 @@ web:
             root: "public"
             expires: 1h
             passthru: "/index.php"
+            # Increase PHP memory limit
+            php.ini: |
+                memory_limit = 512M
+                extension = pdo_pgsql
+                extension = pgsql
 
 workers:
     messenger:
