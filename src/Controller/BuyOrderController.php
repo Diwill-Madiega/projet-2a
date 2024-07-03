@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/buy/order')]
 class BuyOrderController extends AbstractController
@@ -44,7 +44,7 @@ class BuyOrderController extends AbstractController
 
         return $this->render('buy_order/new.html.twig', [
             'buy_order' => $buyOrder,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -70,14 +70,14 @@ class BuyOrderController extends AbstractController
 
         return $this->render('buy_order/edit.html.twig', [
             'buy_order' => $buyOrder,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/{id}', name: 'app_buy_order_delete', methods: ['POST'])]
     public function delete(Request $request, BuyOrder $buyOrder, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$buyOrder->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$buyOrder->getId(), $request->request->get('_token'))) {
             $entityManager->remove($buyOrder);
             $entityManager->flush();
         }

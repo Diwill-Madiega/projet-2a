@@ -8,6 +8,9 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{ asset('js/collection.js') }}"></script>
+        
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link href="{{ asset('build/app.css') }}" rel="stylesheet">
@@ -75,17 +78,12 @@
                     {% elseif is_granted ('ROLE_TRADER') %}
                         <li class="nav-item">
                             <a class="nav-link white-text" href="{{ path('app_devis_index') }}"><i class="fas fa-file-invoice-dollar"></i> Devis</a>
-                        <li class="nav-item dropdown">
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link white-text" href="{{ path('app_devis_index') }}"><i class="fas fa-grip-lines"></i> Lignes Devis</a>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle white-text" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-hand-holding-usd"></i> Achat
-                            </a>
-                            <div class="dropdown-menu white-text" aria-labelledby="adminDropdown">
-                                <a class="dropdown-item" href="{{ path('app_buy_order_index') }}">Commandes</a>
-                                <a class="dropdown-item" href="{{ path('app_buy_order_line_index') }}">Lignes commandes</a>
-                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link white-text" href="{{ path('app_buy_order_index') }}"><i class="fas fa-hand-holding-usd"></i> Achat</a>
                         </li>
                             <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle white-text" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New DevisLine{% endblock %}
+
+{% block body %}
+    <h1>Create new DevisLine</h1>
+
+    {{ include('devis_line/_form.html.twig') }}
+
+    <a href="{{ path('app_devis_line_index') }}">back to list</a>
+{% endblock %}

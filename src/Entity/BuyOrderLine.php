@@ -32,7 +32,7 @@ class BuyOrderLine
     private ?Furnisher $furnisher = null;
 
     #[ORM\ManyToOne(inversedBy: 'buyOrderLines')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?BuyOrder $buyOrder = null;
 
     public function getId(): ?int

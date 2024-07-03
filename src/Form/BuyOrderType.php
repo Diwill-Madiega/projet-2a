@@ -1,14 +1,15 @@
 <?php
 
+// src/Form/BuyOrderType.php
+
 namespace App\Form;
 
 use App\Entity\BuyOrder;
-use App\Entity\Furnisher;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Form\BuyOrderLineType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class BuyOrderType extends AbstractType
 {
@@ -17,8 +18,17 @@ class BuyOrderType extends AbstractType
         $builder
             ->add('name')
             ->add('date')
-
-        ;
+            ->add('buyOrderLines', CollectionType::class, [
+                'entry_type' => BuyOrderLineType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'prototype' => true,
+                'attr' => [
+                    'class' => 'buy-order-lines',
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

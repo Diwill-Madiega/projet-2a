@@ -71,12 +71,19 @@ class Piece
     #[ORM\OneToMany(targetEntity: SellOrderLine::class, mappedBy: 'piece')]
     private Collection $sellOrderLines;
 
+    /**
+     * @var Collection<int, DevisLine>
+     */
+    #[ORM\OneToMany(targetEntity: DevisLine::class, mappedBy: 'piece')]
+    private Collection $devisLines;
+
     public function __construct()
     {
         $this->subpiece = new ArrayCollection();
         $this->subpieces = new ArrayCollection();
         $this->buyOrderLines = new ArrayCollection();
         $this->sellOrderLines = new ArrayCollection();
+        $this->devisLines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -298,6 +305,36 @@ class Piece
             // set the owning side to null (unless already changed)
             if ($sellOrderLine->getPiece() === $this) {
                 $sellOrderLine->setPiece(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DevisLine>
+     */
+    public function getDevisLines(): Collection
+    {
+        return $this->devisLines;
+    }
+
+    public function addDevisLine(DevisLine $devisLine): static
+    {
+        if (!$this->devisLines->contains($devisLine)) {
+            $this->devisLines->add($devisLine);
+            $devisLine->setPiece($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevisLine(DevisLine $devisLine): static
+    {
+        if ($this->devisLines->removeElement($devisLine)) {
+            // set the owning side to null (unless already changed)
+            if ($devisLine->getPiece() === $this) {
+                $devisLine->setPiece(null);
             }
         }
 
