@@ -1,7 +1,7 @@
 // public/js/collection.js
 
 $(document).ready(function() {
-    var $collectionHolder = $('div.devis-lines');
+    var $collectionHolder = $('div.buy-order-lines');
     var $addNewItem = $('#add-item');
 
     // setup an "add a new item" button
@@ -20,6 +20,7 @@ $(document).ready(function() {
 
         // Display the form in a div, before the "add new item" link
         var $newFormLi = $('<div class="form-group row mb-3"></div>').append(newForm);
+        $newFormLi.append('<div class="col-md-1"><button type="button" class="btn btn-danger remove-item">Remove</button></div>');
         $addNewItem.before($newFormLi);
     });
 

@@ -7,42 +7,91 @@
         {{ form_label(form.date, "Date", {'label_attr': {'class': 'form-label'}}) }}
         {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
     </div>
-    <hr />
-    <div class="form-group">
-        {{ form_label(form.buyOrderLines, "Lignes de commande", {'label_attr': {'class': 'form-label fw-bold'}}) }}
-        <div data-prototype="{{ form_widget(form.buyOrderLines.vars.prototype)|e('html_attr') }}" class="buy-order-lines">
-{% for buyOrderLine in form.buyOrderLines %}
-    <div class="form-group row mb-3">
-        <div class="col-md-3">
-            {{ form_label(buyOrderLine.piece, "Pièce") }}
-            {{ form_widget(buyOrderLine.piece, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="col-md-2">
-            {{ form_label(buyOrderLine.price, "Prix") }}
-            {{ form_widget(buyOrderLine.price, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="col-md-2">
-            {{ form_label(buyOrderLine.amount, "Quantité") }}
-            {{ form_widget(buyOrderLine.amount, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="col-md-3">
-            {{ form_label(buyOrderLine.date, "Date") }}
-            {{ form_widget(buyOrderLine.date, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="col-md-2">
-            {{ form_label(buyOrderLine.furnisher, "Fournisseur") }}
-            {{ form_widget(buyOrderLine.furnisher, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-danger remove-item" style="margin: 10px 0px 10px 0px;">
-                <i class="fas fa-trash"></i> Supprimer
-            </button>
-        </div>
+        <div class="form-group">
+        {{ form_label(form.furnisher, "Fournisseur", {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.furnisher, {'attr': {'class': 'form-control'}}) }}
     </div>
-{% endfor %}
-                <button type="button" class="btn btn-success mt-2" id="add-item"><i class="fas fa-plus"></i>Ajouter une ligne</button>
-        </div>
+    <hr />
+    <div class="form-group" data-collection-holder data-prototype="{{ form_widget(form.buyOrderLines.vars.prototype)|e('html_attr') }}">
+        {{ form_label(form.buyOrderLines, "Lignes de commande", {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                <br/>
+        {% for buyOrderLine in form.buyOrderLines %}
+            <div class="form-group row mb-3">
+                <div class="col-md-3">
+                    {{ form_label(buyOrderLine.piece, "Pièce") }}
+                    {{ form_widget(buyOrderLine.piece, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_label(buyOrderLine.price, "Prix") }}
+                    {{ form_widget(buyOrderLine.price, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_label(buyOrderLine.amount, "Quantité") }}
+                    {{ form_widget(buyOrderLine.amount, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_label(buyOrderLine.date, "Date") }}
+                    {{ form_widget(buyOrderLine.date, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger remove-item" style="margin: 32px 0px 0px 0px;">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+
+        <button type="button" class="btn btn-success mt-2 add-item-button"><i class="fas fa-plus"></i> Ajouter une ligne</button>
     </div>
 
     <button class="btn btn-primary mt-3"><i class="fas fa-save"></i>{{ button_label|default(' Enregistrer') }}</button>
 {{ form_end(form) }}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let collectionHolder = document.querySelector('[data-collection-holder]');
+        let prototype = collectionHolder.getAttribute('data-prototype');
+        let addButton = document.querySelector('.add-item-button');
+
+        addButton.addEventListener('click', function() {
+            let newForm = prototype.replace(/__name__/g, collectionHolder.children.length);
+            
+            let parser = new DOMParser();
+            let newFormElement = parser.parseFromString(newForm, 'text/html').body.firstChild;
+            newFormElement.classList.add('form-group', 'row', 'mb-3');
+
+            let divPiece = newFormElement.querySelector('[name*="[piece]"]').closest('div');
+            divPiece.classList.add('col-md-3');
+
+            let divPrice = newFormElement.querySelector('[name*="[price]"]').closest('div');
+            divPrice.classList.add('col-md-2');
+
+            let divAmount = newFormElement.querySelector('[name*="[amount]"]').closest('div');
+            divAmount.classList.add('col-md-2');
+
+
+            let divDate = newFormElement.querySelector('[name*="[date]"]').closest('div');
+            divDate.classList.add('col-md-2');
+
+            let removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.classList.add('btn', 'btn-danger', 'remove-item');
+            removeButton.style.margin = '32px 0px 0px 0px';
+            removeButton.innerHTML = '<i class="fas fa-trash"></i> Supprimer';
+
+            let colDiv = document.createElement('div');
+            colDiv.classList.add('col-md-2');
+            colDiv.appendChild(removeButton);
+
+            newFormElement.appendChild(colDiv);
+
+            collectionHolder.insertBefore(newFormElement, addButton);
+        });
+
+        collectionHolder.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('remove-item')) {
+                e.target.closest('.form-group.row').remove();
+            }
+        });
+    });
+</script>

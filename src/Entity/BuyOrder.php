@@ -31,6 +31,9 @@ class BuyOrder
     #[ORM\OneToMany(targetEntity: BuyOrderLine::class, mappedBy: 'buyOrder', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $buyOrderLines;
 
+    #[ORM\ManyToOne(inversedBy: 'buyOrders')]
+    private ?Furnisher $furnisher = null;
+
     public function __construct()
     {
         $this->buyOrderLines = new ArrayCollection();
@@ -92,6 +95,18 @@ class BuyOrder
                 $buyOrderLine->setBuyOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFurnisher(): ?Furnisher
+    {
+        return $this->furnisher;
+    }
+
+    public function setFurnisher(?Furnisher $furnisher): static
+    {
+        $this->furnisher = $furnisher;
 
         return $this;
     }

@@ -34,11 +34,6 @@ class BuyOrderLineType extends AbstractType
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
-            ])
-            ->add('furnisher', EntityType::class, [
-                'class' => Furnisher::class,
-                'choice_label' => 'name',
-                'attr' => ['class' => 'form-control'],
             ]);
     }
 

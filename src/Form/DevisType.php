@@ -1,6 +1,5 @@
 <?php
 
-// src/Form/DevisType.php
 namespace App\Form;
 
 use App\Entity\Customer;
@@ -37,6 +36,7 @@ class DevisType extends AbstractType
                 'prototype' => true,
                 'prototype_name' => '__name__',
             ]);
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void

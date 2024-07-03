@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New DevisLine{% endblock %}
+{% block title %}Nouvelle ligne devis_line{% endblock %}
 
 {% block body %}
-    <h1>Create new DevisLine</h1>
+<div class="container">
+    <h1 class="mt-4 mb-4"><strong>Créer une ligne de devis_line</strong></h1>
 
-    {{ include('devis_line/_form.html.twig') }}
-
-    <a href="{{ path('app_devis_line_index') }}">back to list</a>
+    <div class="mt-4">
+        {{ include('devis_line/_form.html.twig') }}
+        <a href="{{ path('app_devis_line_index') }}" class="btn btn-secondary mt-2"><i class="fas fa-arrow-left"></i> Retour</a>
+    </div>
+<div>
 {% endblock %}

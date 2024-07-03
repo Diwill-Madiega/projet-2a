@@ -4,9 +4,11 @@
 
 namespace App\Form;
 
+use App\Entity\Furnisher;
 use App\Entity\BuyOrder;
 use App\Form\BuyOrderLineType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,6 +30,11 @@ class BuyOrderType extends AbstractType
                 'attr' => [
                     'class' => 'buy-order-lines',
                 ],
+            ])
+            ->add('furnisher', EntityType::class, [
+                'class' => Furnisher::class,
+                'choice_label' => 'name',
+                'attr' => ['class' => 'form-control'],
             ]);
     }
 
