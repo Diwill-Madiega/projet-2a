@@ -41,12 +41,6 @@ class OperationType extends AbstractType
                 'choice_label' => 'name',
                 'required' => false,
                 'placeholder' => "Machine",
-                'query_builder' => function (EntityRepository $er) use ($post) {
-                    return $er->createQueryBuilder('m')
-                        ->join('m.posts', 'p')
-                        ->where('p.id = :post_id')
-                        ->setParameter('post_id', $post->getId());
-                },
             ]);
         });
     }
