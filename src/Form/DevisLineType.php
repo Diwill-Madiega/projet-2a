@@ -18,9 +18,17 @@ class DevisLineType extends AbstractType
             'class' => Piece::class,
             'choice_label' => 'name',
             'placeholder' => 'Sélectionner une pièce',
+            'attr' => ['class' => 'form-control'],
+            'label' => 'Pièce',
         ])
-            ->add('amount')
-            ->add('price')
+            ->add('amount', null, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Quantité',
+            ])
+            ->add('price', null, [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Prix',
+            ])
 
         ;
     }

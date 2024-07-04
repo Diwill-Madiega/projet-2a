@@ -17,15 +17,18 @@ class UserType extends AbstractType
         $builder
 
             ->add('firstName', null, [
-            'attr' => ['class' => 'form-control']
+            'attr' => ['class' => 'form-control'],
+            'label' => 'Prénom',
             ])
 
             ->add('lastName', null, [
-            'attr' => ['class' => 'form-control']
+            'attr' => ['class' => 'form-control'],
+            'label' => 'nom',
             ])
 
             ->add('email', null, [
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Email',
             ])
 
             ->add('password', null, [
@@ -37,6 +40,7 @@ class UserType extends AbstractType
                     'class' => 'form-control',
                     'autocomplete' => 'new-password',
                 ],
+                'label' => 'Mot de passe',
             ])
 
             ->add('Rights', EntityType::class, [
@@ -44,6 +48,7 @@ class UserType extends AbstractType
                 'choice_label' => 'role_name',
                 'attr' => ['class' => 'form-control'],
                 'placeholder' => 'Sélectionnez un rôle',
+                'label' => 'Rôles',
             ])
 
             ->add('qualification', EntityType::class, [
@@ -51,6 +56,8 @@ class UserType extends AbstractType
                 'choice_label' => 'name',
                 'required' => false,
                 'multiple' => 'true',
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Qualifications',
             ])
         ;
     }

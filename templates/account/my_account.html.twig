@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Mon compte</h1>
+        {% if app.user %}
+            {{ form_start(form) }}
+                {{ form_row(form.firstName, { 'attr':{'disabled':'disabled'} }) }}
+                {{ form_row(form.lastName, { 'attr':{'disabled':'disabled'} }) }}
+                {{ form_row(form.email, { 'attr':{'disabled':'disabled'} }) }}
+                {{ form_row(form.Rights, { 'attr':{'disabled':'disabled'} }) }}
+                {{ form_row(form.qualification, { 'attr':{'disabled':'disabled'} }) }}
+
+                {{ form_row(form.password, {'label': 'Changer le mot de passe'}) }}
+
+                <button type="submit" class="btn btn-primary" style="margin: 10px 0px 10px 0px;"><i class="fas fa-save"> </i> Enregistrer</button>
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
+{% endblock %}
+

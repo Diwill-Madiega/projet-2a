@@ -117,8 +117,12 @@
                     {% endif %}
 
                     {% if app.user %}
-                        <li class="nav-item">
-                            <a class="nav-link white-text" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+
+                        <li class="nav-item ">
+                            <a class="nav-link white-text align-self-end" href="{{ path('app_my_account') }}"><i class="fas fa-user"></i> Mon Compte</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link white-text align-self-end" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
                         </li>
                     {% endif %}
                 </ul>
