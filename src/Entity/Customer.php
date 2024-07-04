@@ -24,9 +24,17 @@ class Customer
     #[ORM\OneToMany(targetEntity: Devis::class, mappedBy: 'customer')]
     private Collection $devis;
 
+    /**
+     * @var Collection<int, SellOrder>
+     */
+    #[ORM\OneToMany(targetEntity: SellOrder::class, mappedBy: 'customer')]
+    private Collection $sellOrders;
+
     public function __construct()
     {
         $this->devis = new ArrayCollection();
+        $this->sellOrders = new ArrayCollection();
+        $this->devisLines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -45,6 +53,38 @@ class Customer
 
         return $this;
     }
+
+
+ /**
+     * @return Collection<int, DevisLine>
+     */
+    public function getDevisLines(): Collection
+    {
+        return $this->devisLines;
+    }
+
+    public function addDevisLine(DevisLine $devisLine): self
+    {
+        if (!$this->devisLines->contains($devisLine)) {
+            $this->devisLines[] = $devisLine;
+            $devisLine->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevisLine(DevisLine $devisLine): self
+    {
+        if ($this->devisLines->removeElement($devisLine)) {
+            // set the owning side to null (unless already changed)
+            if ($devisLine->getCustomer() === $this) {
+                $devisLine->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
 
     /**
      * @return Collection<int, Devis>
@@ -70,6 +110,36 @@ class Customer
             // set the owning side to null (unless already changed)
             if ($devi->getCustomer() === $this) {
                 $devi->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SellOrder>
+     */
+    public function getSellOrders(): Collection
+    {
+        return $this->sellOrders;
+    }
+
+    public function addSellOrder(SellOrder $sellOrder): static
+    {
+        if (!$this->sellOrders->contains($sellOrder)) {
+            $this->sellOrders->add($sellOrder);
+            $sellOrder->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSellOrder(SellOrder $sellOrder): static
+    {
+        if ($this->sellOrders->removeElement($sellOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($sellOrder->getCustomer() === $this) {
+                $sellOrder->setCustomer(null);
             }
         }
 

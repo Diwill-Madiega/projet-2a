@@ -7,45 +7,50 @@
         {{ form_label(form.date, "Date", {'label_attr': {'class': 'form-label'}}) }}
         {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
     </div>
-        <div class="form-group">
+    <div class="form-group">
         {{ form_label(form.furnisher, "Fournisseur", {'label_attr': {'class': 'form-label'}}) }}
         {{ form_widget(form.furnisher, {'attr': {'class': 'form-control'}}) }}
     </div>
     <hr />
     <div class="form-group" data-collection-holder data-prototype="{{ form_widget(form.buyOrderLines.vars.prototype)|e('html_attr') }}">
         {{ form_label(form.buyOrderLines, "Lignes de commande", {'label_attr': {'class': 'form-label fw-bold'}}) }}
-                <br/>
+        <br/>
         {% for buyOrderLine in form.buyOrderLines %}
             <div class="form-group row mb-3">
                 <div class="col-md-3">
-                    {{ form_label(buyOrderLine.piece, "Pièce") }}
+                    {{ form_label(buyOrderLine.piece, "Pièce", {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(buyOrderLine.piece, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="col-md-2">
-                    {{ form_label(buyOrderLine.price, "Prix") }}
+                    {{ form_label(buyOrderLine.price, "Prix", {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(buyOrderLine.price, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="col-md-2">
-                    {{ form_label(buyOrderLine.amount, "Quantité") }}
+                    {{ form_label(buyOrderLine.amount, "Quantité", {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(buyOrderLine.amount, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="col-md-2">
-                    {{ form_label(buyOrderLine.date, "Date") }}
+                    {{ form_label(buyOrderLine.date, "Date", {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(buyOrderLine.date, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-danger remove-item" style="margin: 32px 0px 0px 0px;">
+                    <button type="button" class="btn btn-danger remove-item" style="margin-top: 32px;">
                         <i class="fas fa-trash"></i> Supprimer
                     </button>
                 </div>
             </div>
         {% endfor %}
 
-        <button type="button" class="btn btn-success mt-2 add-item-button"><i class="fas fa-plus"></i> Ajouter une ligne</button>
+        <button type="button" class="btn btn-success mt-2 add-item-button">
+            <i class="fas fa-plus"></i> Ajouter une ligne
+        </button>
     </div>
 
-    <button class="btn btn-primary mt-3"><i class="fas fa-save"></i>{{ button_label|default(' Enregistrer') }}</button>
+    <button class="btn btn-primary mt-3">
+        <i class="fas fa-save"></i> {{ button_label|default(' Enregistrer') }}
+    </button>
 {{ form_end(form) }}
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

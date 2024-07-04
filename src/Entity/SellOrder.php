@@ -22,7 +22,6 @@ class SellOrder
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $detail = null;
 
@@ -32,9 +31,20 @@ class SellOrder
     #[ORM\OneToMany(targetEntity: SellOrderLine::class, mappedBy: 'sellOrder')]
     private Collection $sellOrderLines;
 
+    /**
+     * @var Collection<int, DevisLine>
+     */
+    #[ORM\ManyToMany(targetEntity: DevisLine::class, inversedBy: 'sellOrders')]
+    private Collection $devisLines;
+
+    #[ORM\ManyToOne(inversedBy: 'sellOrders')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Customer $customer = null;
+
     public function __construct()
     {
         $this->sellOrderLines = new ArrayCollection();
+        $this->devisLines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,6 +114,42 @@ class SellOrder
                 $sellOrderLine->setSellOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DevisLine>
+     */
+    public function getDevisLines(): Collection
+    {
+        return $this->devisLines;
+    }
+
+    public function addDevisLine(DevisLine $devisLine): static
+    {
+        if (!$this->devisLines->contains($devisLine)) {
+            $this->devisLines->add($devisLine);
+        }
+
+        return $this;
+    }
+
+    public function removeDevisLine(DevisLine $devisLine): static
+    {
+        $this->devisLines->removeElement($devisLine);
+
+        return $this;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): static
+    {
+        $this->customer = $customer;
 
         return $this;
     }

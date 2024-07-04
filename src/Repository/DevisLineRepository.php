@@ -16,6 +16,16 @@ class DevisLineRepository extends ServiceEntityRepository
         parent::__construct($registry, DevisLine::class);
     }
 
+    public function findByCustomer($customerId)
+    {
+        return $this->createQueryBuilder('dl')
+            ->innerJoin('dl.devis', 'd')
+            ->where('d.customer = :customer')
+            ->setParameter('customer', $customerId)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return DevisLine[] Returns an array of DevisLine objects
     //     */

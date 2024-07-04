@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DevisLineRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DevisLineRepository::class)]
@@ -25,6 +27,17 @@ class DevisLine
 
     #[ORM\ManyToOne(inversedBy: 'DevisLine')]
     private ?Devis $devis = null;
+
+    /**
+     * @var Collection<int, SellOrder>
+     */
+    #[ORM\ManyToMany(targetEntity: SellOrder::class, mappedBy: 'DevisLine')]
+    private Collection $sellOrders;
+
+    public function __construct()
+    {
+        $this->sellOrders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,33 @@ class DevisLine
     public function setDevis(?Devis $devis): static
     {
         $this->devis = $devis;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SellOrder>
+     */
+    public function getSellOrders(): Collection
+    {
+        return $this->sellOrders;
+    }
+
+    public function addSellOrder(SellOrder $sellOrder): static
+    {
+        if (!$this->sellOrders->contains($sellOrder)) {
+            $this->sellOrders->add($sellOrder);
+            $sellOrder->addDevisLine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSellOrder(SellOrder $sellOrder): static
+    {
+        if ($this->sellOrders->removeElement($sellOrder)) {
+            $sellOrder->removeDevisLine($this);
+        }
 
         return $this;
     }

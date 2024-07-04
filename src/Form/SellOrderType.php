@@ -3,7 +3,10 @@
 namespace App\Form;
 
 use App\Entity\SellOrder;
+use App\Entity\Customer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +20,12 @@ class SellOrderType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('detail')
-        ;
+            ->add('customer', EntityType::class, [
+                'class' => Customer::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Choisir un client',
+                'label' => 'Client'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

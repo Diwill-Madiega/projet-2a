@@ -24,16 +24,20 @@ class BuyOrderLineType extends AbstractType
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control'],
                 'placeholder' => "Sélectionner une pièce",
+                'label' => "Pièce",
             ])
             ->add('price', NumberType::class, [
                 'attr' => ['class' => 'form-control'],
+                'label' => "Prix",
             ])
             ->add('amount', NumberType::class, [
                 'attr' => ['class' => 'form-control'],
+                'label' => "Quantité",
             ])
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control'],
+                'label' => "Date",
             ]);
     }
 
