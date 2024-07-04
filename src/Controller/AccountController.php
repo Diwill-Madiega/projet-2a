@@ -37,7 +37,7 @@ class AccountController extends AbstractController
             $entityManager->flush();
 
             // Add a flash message for success
-            $this->addFlash('success', 'Your profile has been updated.');
+            $this->addFlash('Succès', "Mot de passe modifié avec succès!");
 
             // Redirect back to the same page to avoid form resubmission
             return $this->redirectToRoute('app_my_account');

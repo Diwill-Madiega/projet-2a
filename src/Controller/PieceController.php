@@ -35,7 +35,7 @@ class PieceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($piece);
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Pièce créée avec succès!");
             return $this->redirectToRoute('app_piece_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -61,7 +61,7 @@ class PieceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Pièce modifiée avec succès!");
             return $this->redirectToRoute('app_piece_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,6 +77,7 @@ class PieceController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$piece->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($piece);
             $entityManager->flush();
+            $this->addFlash('Succès', "Pièce supprimée avec succès!");
         }
 
         return $this->redirectToRoute('app_piece_index', [], Response::HTTP_SEE_OTHER);

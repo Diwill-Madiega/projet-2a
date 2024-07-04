@@ -25,7 +25,13 @@ class SellOrderType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Choisir un client',
                 'label' => 'Client'
-            ]);
+            ])
+            ->add('devisLines', CollectionType::class, [
+                'entry_type' => DevisLineType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'by_reference' => false,
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -40,6 +40,7 @@ class GammeController extends AbstractController
             $entityManager->persist($gamme);
             $entityManager->flush();
 
+            $this->addFlash('Succès', 'Gamme créée avec succès!');
             return $this->redirectToRoute('app_gamme_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -72,6 +73,7 @@ class GammeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('Succès', 'Gamme modifiée avec succès!');
             return $this->redirectToRoute('app_gamme_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -90,6 +92,7 @@ class GammeController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$gamme->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($gamme);
             $entityManager->flush();
+            $this->addFlash('Succès', 'Gamme supprimée avec succès!');
         }
 
         return $this->redirectToRoute('app_gamme_index', [], Response::HTTP_SEE_OTHER);

@@ -38,7 +38,7 @@ class DevisController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($devis);
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Devis créé avec succès!");
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,7 +64,7 @@ class DevisController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Devis modifié avec succès!");
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -80,6 +80,7 @@ class DevisController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$devis->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($devis);
             $entityManager->flush();
+            $this->addFlash('Succès', "Devis supprimé avec succès!");
         }
 
         return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);

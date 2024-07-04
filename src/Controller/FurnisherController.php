@@ -38,7 +38,7 @@ class FurnisherController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($furnisher);
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Fournisseur créé avec succès!");
             return $this->redirectToRoute('app_furnisher_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,7 +64,7 @@ class FurnisherController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Fournisseur modifié avec succès!");
             return $this->redirectToRoute('app_furnisher_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -80,6 +80,7 @@ class FurnisherController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$furnisher->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($furnisher);
             $entityManager->flush();
+            $this->addFlash('Succès', "Fournisseur supprimé avec succès!");
         }
 
         return $this->redirectToRoute('app_furnisher_index', [], Response::HTTP_SEE_OTHER);

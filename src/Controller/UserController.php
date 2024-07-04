@@ -40,7 +40,7 @@ class UserController extends AbstractController
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
                 $user->setPassword($hashedPassword);
             }
-
+            $this->addFlash('Succès', "Utilisateur créé avec succès!");
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -75,7 +75,7 @@ class UserController extends AbstractController
             }
 
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Utilisateur modifié avec succès!");
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -91,6 +91,7 @@ class UserController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
+            $this->addFlash('Succès', "Utilisateur supprimé avec succès!");
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);

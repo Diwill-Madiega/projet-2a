@@ -23,7 +23,10 @@ class MachineController extends AbstractController
 
         $user = $this->getUser();
 
+        $this->addFlash('success', 'Machine créée avec succès.');
+
         return $this->render('machine/index.html.twig', [
+
             'machines' => $machines,
             'user' => $user,
         ]);
@@ -39,7 +42,7 @@ class MachineController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($machine);
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Machine créée avec succès!");
             return $this->redirectToRoute('app_machine_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -71,7 +74,7 @@ class MachineController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Machine modifiée avec succès!");
             return $this->redirectToRoute('app_machine_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -90,6 +93,7 @@ class MachineController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$machine->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($machine);
             $entityManager->flush();
+            $this->addFlash('Succès', "Machine supprimée avec succès!");
         }
 
         return $this->redirectToRoute('app_machine_index', [], Response::HTTP_SEE_OTHER);

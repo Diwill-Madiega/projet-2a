@@ -35,7 +35,7 @@ class ProductionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($production);
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Réalisation créée avec succès!");
             return $this->redirectToRoute('app_production_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -61,7 +61,7 @@ class ProductionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Réalisation modifiée avec succès!");
             return $this->redirectToRoute('app_production_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,6 +77,7 @@ class ProductionController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$production->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($production);
             $entityManager->flush();
+            $this->addFlash('Succès', "Réalisation supprimée avec succès!");
         }
 
         return $this->redirectToRoute('app_production_index', [], Response::HTTP_SEE_OTHER);

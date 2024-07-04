@@ -38,7 +38,7 @@ class OperationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($operation);
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Opération créée avec succès!");
             return $this->redirectToRoute('app_operation_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -70,7 +70,7 @@ class OperationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Opération modifiée avec succès!");
             return $this->redirectToRoute('app_operation_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -89,6 +89,7 @@ class OperationController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$operation->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($operation);
             $entityManager->flush();
+            $this->addFlash('Succès', "Opération supprimée avec succès!");
         }
 
         return $this->redirectToRoute('app_operation_index', [], Response::HTTP_SEE_OTHER);

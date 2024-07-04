@@ -32,25 +32,23 @@ class SellOrderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sell_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request): Response
     {
         $sellOrder = new SellOrder();
         $form = $this->createForm(SellOrderType::class, $sellOrder);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($sellOrder->getDevisLines() as $devisLine) {
-                $devisLine->addSellOrder($sellOrder);
-            }
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($sellOrder);
             $entityManager->flush();
-    
-            return $this->redirectToRoute('app_sell_order_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('Succès', "Commande de vente créée avec succès!");
+            return $this->redirectToRoute('sell_order_index');
         }
-    
+
         return $this->render('sell_order/new.html.twig', [
             'sell_order' => $sellOrder,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -70,7 +68,7 @@ class SellOrderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Commande de vente modifiée avec succès!");
             return $this->redirectToRoute('app_sell_order_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -86,26 +84,9 @@ class SellOrderController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $sellOrder->getId(), $request->request->get('_token'))) {
             $entityManager->remove($sellOrder);
             $entityManager->flush();
+            $this->addFlash('Succès', "Commande de vente supprimée avec succès!");
         }
 
         return $this->redirectToRoute('app_sell_order_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    #[Route('/fetch-devis-lines', name: 'fetch_devis_lines', methods: ['GET'])]
-    public function fetchDevisLines(): JsonResponse
-    {
-        $devisLines = $this->getDoctrine()->getRepository(DevisLine::class)->findAll();
-
-        $devisLinesData = [];
-        foreach ($devisLines as $devisLine) {
-            $devisLinesData[] = [
-                'id' => $devisLine->getId(),
-                'name' => $devisLine->getName(),
-                // Add other fields you want to include
-            ];
-        }
-
-        return new JsonResponse($devisLinesData);
-    }
-
 }

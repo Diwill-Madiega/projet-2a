@@ -22,6 +22,7 @@ class BuyOrderController extends AbstractController
 
         $user = $this->getUser();
 
+
         return $this->render('buy_order/index.html.twig', [
             'buy_orders' => $buyOrders,
             'user' => $user,
@@ -39,6 +40,7 @@ class BuyOrderController extends AbstractController
             $entityManager->persist($buyOrder);
             $entityManager->flush();
 
+            $this->addFlash('Succès', "Commande d'achat créée avec succès!");
             return $this->redirectToRoute('app_buy_order_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,7 +66,7 @@ class BuyOrderController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            $this->addFlash('Succès', "Commande d'achat modifiée avec succès!");
             return $this->redirectToRoute('app_buy_order_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -80,6 +82,7 @@ class BuyOrderController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$buyOrder->getId(), $request->request->get('_token'))) {
             $entityManager->remove($buyOrder);
             $entityManager->flush();
+            $this->addFlash('Succès', "Commande d'achat supprimée avec succès!");
         }
 
         return $this->redirectToRoute('app_buy_order_index', [], Response::HTTP_SEE_OTHER);
