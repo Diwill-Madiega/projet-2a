@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Psr\Log\LoggerInterface;
 
-#[Route('/sell/order')]
+#[Route('/sell-order')]
 class SellOrderController extends AbstractController
 {
     #[Route('/', name: 'app_sell_order_index', methods: ['GET'])]
@@ -32,18 +32,17 @@ class SellOrderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sell_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $sellOrder = new SellOrder();
         $form = $this->createForm(SellOrderType::class, $sellOrder);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($sellOrder);
             $entityManager->flush();
             $this->addFlash('Succès', "Commande de vente créée avec succès!");
-            return $this->redirectToRoute('sell_order_index');
+            return $this->redirectToRoute('app_sell_order_index');
         }
 
         return $this->render('sell_order/new.html.twig', [

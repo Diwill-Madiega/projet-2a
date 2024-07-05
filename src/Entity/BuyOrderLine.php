@@ -27,9 +27,6 @@ class BuyOrderLine
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'buyOrderLines')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Furnisher $furnisher = null;
 
     #[ORM\ManyToOne(inversedBy: 'buyOrderLines')]
     #[ORM\JoinColumn(nullable: true)]
@@ -84,18 +81,6 @@ class BuyOrderLine
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getFurnisher(): ?Furnisher
-    {
-        return $this->furnisher;
-    }
-
-    public function setFurnisher(?Furnisher $furnisher): static
-    {
-        $this->furnisher = $furnisher;
 
         return $this;
     }

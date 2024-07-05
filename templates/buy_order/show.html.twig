@@ -28,8 +28,7 @@
                         {% for line in buy_order.buyOrderLines %}
                             {% set total_price = total_price + line.price %}
                         <li>
-                        <!-- Adjust these properties according to your buyOrderLine entity -->
-                        ID:{{ line.id }} | Prix:{{ line.price }} | Quantité {{ line.amount }} | {{ line.piece.name }} | {{ line.furnisher.name }}
+                        ID:{{ line.id }} |  {{ line.piece.name }} |  Prix:{{ line.price }} | Quantité : {{ line.amount }}
                         </li>
                         {% endfor %}
                 </ul>

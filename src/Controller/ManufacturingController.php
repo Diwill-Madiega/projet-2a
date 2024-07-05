@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Piece;
-use App\Entity\Manufacturing;
+use App\Entity\Production;
 use App\Entity\Post;
 use App\Entity\Machine;
 use App\Form\ManufacturingType;
+use App\Form\ProductionType;
 use App\Repository\PostRepository;
 use App\Repository\MachineRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,8 +45,8 @@ class ManufacturingController extends AbstractController
     #[Route('/new', name: 'app_manufacturing_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $manufacturing = new Manufacturing();
-        $form = $this->createForm(ManufacturingType::class, $manufacturing);
+        $manufacturing = new Production();
+        $form = $this->createForm(ProductionType::class, $manufacturing);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,7 +58,7 @@ class ManufacturingController extends AbstractController
 
         $user = $this->getUser();
 
-        return $this->render('manufacturing/new.html.twig', [
+        return $this->render('production/new.html.twig', [
             'manufacturing' => $manufacturing,
             'form' => $form->createView(),
             'user' => $user, 
